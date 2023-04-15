@@ -1,13 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { IUser, TokenPayload } from '../../interfaces/user';
-import { ProtectedRequest, TokenRequest } from '../../interfaces/express';
+import { TokenPayload } from '../../interfaces/personas';
+import { TokenRequest } from '../../interfaces/express';
 import { getJwtPayload } from '../../utils/jwt';
 import { AuthError } from '../../errors';
-
-import AuthService from '../../services/auth';
-import UserModel from '../../models/User';
-
-const authService = new AuthService(UserModel);
 
 const getTokenFromHeader = (req: Request) => {
   if (
@@ -21,6 +16,7 @@ const getTokenFromHeader = (req: Request) => {
 
 export const isAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = getTokenFromHeader(req);
+  console.log(token);
   if (!token) {
     throw new AuthError();
   }
@@ -29,22 +25,7 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
     (<TokenRequest>req).token = jwtPayload;
     next();
   } catch (error) {
-    throw new AuthError();
-  }
-};
-
-export const attachUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const userRecord = (await authService.getUserById(
-      (<TokenRequest>req).token.userId,
-    )) as IUser;
-    (<ProtectedRequest>req).user = userRecord;
-    next();
-  } catch (error) {
+    console.log(error);
     throw new AuthError();
   }
 };

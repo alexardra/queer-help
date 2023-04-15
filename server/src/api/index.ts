@@ -1,11 +1,14 @@
 import { Router } from 'express';
 import tasks from './routes/tasks';
-import auth from './routes/auth';
+import user from './routes/user';
+import admin from './routes/admin';
 
 export default () => {
   const app = Router();
 
-  auth(app);
+  user(app);
+  admin(app);
   tasks(app);
+
   return app;
 };

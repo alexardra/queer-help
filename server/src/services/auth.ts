@@ -1,78 +1,50 @@
 import { Model } from 'mongoose';
-import { createJWT } from '../utils/jwt';
-import { IUserDocument } from '../interfaces/user';
-import { AuthError, BadRequestError, NotFoundError } from '../errors';
+import { AuthError } from '../errors/apiError';
+import { createJWT } from '../utils';
+import { BadRequestError, NotFoundError } from '../errors/apiError';
+// import { IUserDocument, IAdminDocument } from 'interfaces/personas';
 
 export default class AuthService {
-  constructor(private userModel: Model<IUserDocument>) {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor(public personaModel: Model<any>) {}
 
-  private async userAlreadyExists(email: string): Promise<boolean> {
-    const user = await this.userModel.findOne({ email });
-    return user != null;
-  }
-
-  public async getUserById(userId: string) {
-    const userRecord = await this.userModel.findById(userId);
-    if (!userRecord) {
+  public async getPersonaById(personaId: string) {
+    const personaRecord = await this.personaModel.findById(personaId);
+    if (!personaRecord) {
       throw new AuthError('Invalid credentials');
     }
-    return userRecord;
+    return personaRecord;
   }
 
-  public async getUserByEmail(email: string) {
-    let user;
+  public async getPersonaByEmail(email: string) {
+    let persona;
     try {
-      user = await this.userModel.findOne({ email });
+      persona = await this.personaModel.findOne({ email });
     } catch (error) {
       throw new BadRequestError(`Invalid email ${email} `);
     }
-    if (!user) throw new NotFoundError(`No user with email ${email}`);
+    if (!persona) throw new NotFoundError(`No persona with email ${email}`);
 
-    return user;
+    return persona;
   }
 
-  public async register({
-    email,
-    password,
-    firstname,
-    lastname,
-    referenceLinks,
-    personalNumber,
-  }: {
-    email: string;
-    password: string;
-    firstname: string;
-    lastname: string;
-    referenceLinks: string[];
-    personalNumber: number;
-  }) {
-    const alreadyExists = await this.userAlreadyExists(email);
-    if (alreadyExists) {
-      throw new BadRequestError('User with given email already exists.');
-    }
-    const user = await this.userModel.create({
-      email,
-      password,
-      firstname,
-      lastname,
-      referenceLinks,
-      personalNumber,
-    });
-    const token = createJWT({ userId: user._id, email });
-
-    return { user, token };
+  public async personaAlreadyExists(email: string): Promise<boolean> {
+    const persona = await this.personaModel.findOne({ email });
+    return persona != null;
   }
 
   public async login(email: string, password: string) {
-    const user = await this.userModel.findOne({ email }).select('+password');
-    if (!user) {
+    const persona = await this.personaModel
+      .findOne({ email })
+      .select('+password');
+    if (!persona) {
       throw new AuthError('Invalid credentials');
     }
-    const isPasswordCorrect = await user.checkPassword(password);
+    const isPasswordCorrect = await persona.checkPassword(password);
     if (!isPasswordCorrect) {
       throw new AuthError('Invalid credentials');
     }
-    const token = createJWT({ userId: user._id, email });
-    return { user, token };
+    const token = createJWT({ personaId: persona._id, email });
+    return { persona, token };
   }
 }

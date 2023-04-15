@@ -12,9 +12,12 @@ export default {
   port: process.env.PORT || 3000,
   morganLogFormat: 'tiny',
   databaseURL: process.env.MONGODB_URI || '',
-  jwtSecret: process.env.JWT_SECRET || '',
-  jwtAlgorithm: process.env.JWT_ALGO,
-  jwtLifetime: process.env.JWT_LIFETIME,
+  jwt: {
+    secret: process.env.JWT_SECRET || '',
+    algo: process.env.JWT_ALGO,
+    lifetime: process.env.JWT_LIFETIME,
+  },
+  genSaltRounds: process.env.SALT_ROUNDS,
   api: {
     prefix: '/api',
   },

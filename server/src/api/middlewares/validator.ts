@@ -1,11 +1,12 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
 import { BadRequestError } from '../../errors';
-import { UserVerificationStatus } from '../../interfaces/user';
+import { UserVerificationStatus } from '../../interfaces/personas';
 
 export enum Resource {
   LOGIN = 'login',
-  REGISTER = 'register',
+  REGISTER_USER = 'registerUser',
+  REGISTER_ADMIN = 'registerAdmin',
 }
 
 const schemas = {
@@ -13,7 +14,7 @@ const schemas = {
     email: Joi.string().required(),
     password: Joi.string().required(),
   }),
-  register: Joi.object().keys({
+  registerUser: Joi.object().keys({
     email: Joi.string().required(),
     password: Joi.string().required(),
     firstname: Joi.string().min(3).max(50).required(),
@@ -23,6 +24,12 @@ const schemas = {
     verificationStatus: Joi.string().valid(
       ...Object.values(UserVerificationStatus),
     ),
+  }),
+  registerAdmin: Joi.object().keys({
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+    firstname: Joi.string().min(3).max(50).required(),
+    lastname: Joi.string().min(3).max(50).required(),
   }),
 };
 
