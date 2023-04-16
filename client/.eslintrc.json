@@ -36,7 +36,9 @@
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "typescript": {},
+      "typescript": {
+        "alwaysTryTypes": true
+      },
       "alias": [["@", "./src"]]
     }
   }

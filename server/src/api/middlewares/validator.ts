@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import { BadRequestError } from '../../errors';
-import { UserVerificationStatus } from '../../interfaces/personas';
+import { BadRequestError } from '@/errors';
+import { UserVerificationStatus } from '@/interfaces/personas';
 
 export enum Resource {
   LOGIN = 'login',

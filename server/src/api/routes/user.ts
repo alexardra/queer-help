@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-import middlewares from '../middlewares';
-import UserModel from '../../models/User';
-import UserService from '../../services/user';
-import UserMapper from '../../mappers/user';
-import { IUser } from '../../interfaces/personas';
+import middlewares from '@/api/middlewares';
+import UserModel from '@/models/User';
+import UserService from '@/services/user';
+import UserMapper from '@/mappers/user';
+import { IUser } from '@/interfaces/personas';
 
 const route = Router();
 

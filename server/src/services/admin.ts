@@ -1,6 +1,6 @@
 import AuthService from './auth';
-import { createJWT } from '../utils/jwt';
-import { BadRequestError } from '../errors';
+import { createJWT } from '@/utils/jwt';
+import { BadRequestError } from '@/errors';
 
 export default class AdminService extends AuthService {
   public async register({

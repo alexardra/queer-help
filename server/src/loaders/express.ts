@@ -4,10 +4,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 
-import config from '../config';
-import routes from '../api';
+import config from '@/config';
+import routes from '@/api';
 import swaggerDocs from './swagger';
-import { ApiError, NotFoundError, ServiceUnavailableError } from '../errors';
+import { ApiError, NotFoundError, ServiceUnavailableError } from '@/errors';
 
 export default (app: express.Application) => {
   app.use(express.json());

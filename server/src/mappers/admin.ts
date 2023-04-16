@@ -1,4 +1,4 @@
-import { IAdmin, IAdminDto } from 'interfaces/personas';
+import { IAdmin, IAdminDto } from '@/interfaces/personas';
 
 export default class AdminMapper {
   static toDTO(admin: IAdmin) {

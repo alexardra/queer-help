@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
-import { AuthError } from '../errors/apiError';
-import { createJWT } from '../utils';
-import { BadRequestError, NotFoundError } from '../errors/apiError';
+import { AuthError } from '@/errors/apiError';
+import { createJWT } from '@/utils';
+import { BadRequestError, NotFoundError } from '@/errors/apiError';
 // import { IUserDocument, IAdminDocument } from 'interfaces/personas';
 
 export default class AuthService {

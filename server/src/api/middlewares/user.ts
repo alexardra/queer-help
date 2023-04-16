@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import UserModel from '../../models/User';
-import UserService from '../../services/user';
-import { ForbiddenError, AuthError } from '../../errors';
-import { TokenRequest, ProtectedRequest } from '../../interfaces/express';
-import { IUser, UserVerificationStatus } from '../../interfaces/personas';
+import UserModel from '@/models/User';
+import UserService from '@/services/user';
+import { ForbiddenError, AuthError } from '@/errors';
+import { TokenRequest, ProtectedRequest } from '@/interfaces/express';
+import { IUser, UserVerificationStatus } from '@/interfaces/personas';
 
 const userService = new UserService(UserModel);
 

@@ -1,8 +1,8 @@
 import { Model } from 'mongoose';
-import { createJWT } from '../utils/jwt';
-import { BadRequestError } from '../errors';
+import { createJWT } from '@/utils/jwt';
+import { BadRequestError } from '@/errors';
 
-import { IUserDocument, UserVerificationStatus } from '../interfaces/personas';
+import { IUserDocument, UserVerificationStatus } from '@/interfaces/personas';
 import AuthService from './auth';
 
 export default class UserService extends AuthService {

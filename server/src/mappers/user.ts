@@ -1,4 +1,4 @@
-import { IUser, IUserDto } from '../interfaces/personas';
+import { IUser, IUserDto } from '@/interfaces/personas';
 
 export default class UserMapper {
   static toDTO(user: IUser) {

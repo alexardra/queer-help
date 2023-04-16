@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { TokenPayload } from '../../interfaces/personas';
-import { TokenRequest } from '../../interfaces/express';
-import { getJwtPayload } from '../../utils/jwt';
-import { AuthError } from '../../errors';
+import { TokenPayload } from '@/interfaces/personas';
+import { TokenRequest } from '@/interfaces/express';
+import { getJwtPayload } from '@/utils/jwt';
+import { AuthError } from '@/errors';
 
 const getTokenFromHeader = (req: Request) => {
   if (

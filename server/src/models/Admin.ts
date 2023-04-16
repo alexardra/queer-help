@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 import validator from 'validator';
-import config from '../config';
-import { IAdminDocument } from '../interfaces/personas';
-import { encrypt, encryptCompare } from '../utils';
+import config from '@/config';
+import { IAdminDocument } from '@/interfaces/personas';
+import { encrypt, encryptCompare } from '@/utils';
 
 const AdminSchema: Schema<IAdminDocument> = new Schema(
   {

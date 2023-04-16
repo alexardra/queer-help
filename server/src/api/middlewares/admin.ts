@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import AdminService from '../../services/admin';
-import AdminModel from '../../models/Admin';
-import { TokenRequest, ProtectedRequest } from '../../interfaces/express';
-import { IAdmin } from '../../interfaces/personas';
-import { ForbiddenError, AuthError } from '../../errors';
+import AdminService from '@/services/admin';
+import AdminModel from '@/models/Admin';
+import { TokenRequest, ProtectedRequest } from '@/interfaces/express';
+import { IAdmin } from '@/interfaces/personas';
+import { ForbiddenError, AuthError } from '@/errors';
 
 const adminService = new AdminService(AdminModel);
 

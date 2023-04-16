@@ -1,6 +1,6 @@
 import { sign, verify } from 'jsonwebtoken';
-import config from '../config';
-import { TokenPayload } from '../interfaces/personas';
+import config from '@/config';
+import { TokenPayload } from '@/interfaces/personas';
 
 const createJWT = (payload: TokenPayload): string => {
   const token = sign(payload, config.jwt.secret, {

@@ -1,15 +1,15 @@
 import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-import middlewares from '../../api/middlewares';
-import AdminService from '../../services/admin';
-import AdminModel from '../../models/Admin';
-import AdminMapper from '../../mappers/admin';
-import { IAdmin } from '../../interfaces/personas';
+import middlewares from '@/api/middlewares';
+import AdminService from '@/services/admin';
+import AdminModel from '@/models/Admin';
+import AdminMapper from '@/mappers/admin';
+import { IAdmin } from '@/interfaces/personas';
 
-import UserService from '../../services/user';
-import UserModel from '../../models/User';
-import UserMapper from '../../mappers/user';
+import UserService from '@/services/user';
+import UserModel from '@/models/User';
+import UserMapper from '@/mappers/user';
 
 const route = Router();
 

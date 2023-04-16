@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node build/index.js",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon",
     "build": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
     "lint": "eslint \"src/**/*.{js,ts}\" --quiet",
@@ -49,6 +49,7 @@
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4"
   }
 }
