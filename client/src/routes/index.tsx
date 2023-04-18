@@ -1,12 +1,16 @@
-import { useRoutes } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import { Landing } from '@/features/misc';
+import { createBrowserRouter } from 'react-router-dom';
 
 import { publicRoutes } from './public';
 
-export const AppRoutes: React.FC = () => {
+const AppRoutes = () => {
   const commonRoutes = [{ path: '/', element: <Landing /> }];
 
   const routes = publicRoutes;
-  const element = useRoutes([...routes, ...commonRoutes]);
-  return <>{element}</>;
+  return [...routes, ...commonRoutes] as RouteObject[];
 };
+
+const router = createBrowserRouter(AppRoutes());
+
+export const BrowserRouter = router;

@@ -2,6 +2,7 @@ import { default as MaterialButton } from '@mui/material/Button';
 
 export type ButtonProps = {
   children?: React.ReactNode;
+  type?: 'submit';
   variant?: 'text' | 'outlined' | 'contained';
   color?:
     | 'inherit'
@@ -16,12 +17,13 @@ export type ButtonProps = {
 
 export const Button: React.FC<ButtonProps> = ({
   children,
+  type,
   variant = 'contained',
   color = 'primary',
   size = 'medium',
 }: ButtonProps) => {
   return (
-    <MaterialButton variant={variant} color={color} size={size}>
+    <MaterialButton type={type} variant={variant} color={color} size={size}>
       {children}
     </MaterialButton>
   );

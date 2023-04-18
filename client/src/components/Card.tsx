@@ -1,10 +1,10 @@
 import { default as MaterialCard } from '@mui/material/Card';
 import { default as MaterialCardContent } from '@mui/material/CardContent';
 
-export const Card: React.FC = ({
+export const Card: React.FC<{ children: React.ReactNode }> = ({
   children,
 }: {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }) => {
   return (
     <MaterialCard>

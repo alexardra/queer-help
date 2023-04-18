@@ -1,14 +1,24 @@
-import { BrowserRouter } from 'react-router-dom';
-import { AppRoutes } from '@/routes';
+import { RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter } from '@/routes';
 
 import './App.css';
+
+const queryClilent = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  },
+});
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <QueryClientProvider client={queryClilent}>
+        <RouterProvider router={BrowserRouter} />
+      </QueryClientProvider>
     </div>
   );
 }

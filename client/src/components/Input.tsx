@@ -1,9 +1,9 @@
-import { HTMLInputTypeAttribute } from 'react';
+import { HTMLInputTypeAttribute, useCallback } from 'react';
 import { default as MaterialTextField } from '@mui/material/TextField';
 
 export type InputProps = {
   value: number | string;
-  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  onChange: (event: { name: string; value: number | string }) => void;
   id?: string;
   name?: string;
   label?: string;
@@ -18,10 +18,19 @@ export const Input: React.FC<InputProps> = ({
   label,
   type,
 }: InputProps) => {
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log('---');
+      const { name, value } = e.target;
+      onChange({ name, value });
+    },
+    [onChange],
+  );
+
   return (
     <MaterialTextField
       value={value}
-      onChange={onChange}
+      onChange={handleInputChange}
       id={id}
       name={name}
       label={label}

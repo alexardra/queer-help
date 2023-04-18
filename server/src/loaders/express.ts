@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -27,7 +27,7 @@ export default (app: express.Application) => {
   app.use(config.api.prefix, routes());
 
   /** Healtcheck endpoint */
-  app.use('healthcheck', (req: express.Request, res: express.Response) => {
+  app.use('/healthcheck', (req: express.Request, res: express.Response) => {
     const healthcheck = {
       uptime: process.uptime(),
       message: 'OK',
@@ -48,12 +48,21 @@ export default (app: express.Application) => {
   });
 
   /** Error Handler */
-  app.use((err: ApiError, req: express.Request, res: express.Response) => {
-    console.log(`Error occured: ${err.stack}`);
-    res.status(err.status || 500).json({
-      errors: {
-        message: err.message || 'Something went wrong try again later',
-      },
-    });
-  });
+  app.use(
+    (
+      err: ApiError,
+      req: express.Request,
+      res: express.Response,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      next: NextFunction,
+    ) => {
+      console.log(`Error occured: ${err.stack}`);
+
+      res.status(err.status || 500).json({
+        error: {
+          message: err.message || 'Something went wrong try again later',
+        },
+      });
+    },
+  );
 };
