@@ -1,5 +1,5 @@
 import { axios } from '@/lib/axios';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 export type PersonaCredentials = {
   id: string;
@@ -13,13 +13,18 @@ export type PersonaLoginRequest = {
   password: string;
 };
 
-export type PersonaLoginResponse = {
+export type PersonaAuthResponse = {
   persona: PersonaCredentials;
   token: string;
 };
 
-type CustomError = {
-  error: { message: string };
+export type UserRegisterRequest = {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  referenceLinks: string;
+  personalNumber: number;
 };
 
 export const fetchPersona = (): Promise<PersonaCredentials> => {
@@ -28,30 +33,24 @@ export const fetchPersona = (): Promise<PersonaCredentials> => {
 
 export const loginUser = (
   credentials: PersonaLoginRequest,
-): Promise<PersonaLoginResponse> => {
+): Promise<PersonaAuthResponse> => {
   return axios
     .post('/user/login', credentials)
-    .then((response: AxiosResponse) => response.data as PersonaLoginResponse)
-    .catch((error: AxiosError) => {
-      const customErrors = error?.response?.data as CustomError;
-      if (customErrors) {
-        throw new Error(customErrors.error.message);
-      }
-      throw error;
-    });
+    .then((response: AxiosResponse) => response.data as PersonaAuthResponse);
 };
 
 export const loginAdmin = (
   credentials: PersonaLoginRequest,
-): Promise<PersonaLoginResponse> => {
+): Promise<PersonaAuthResponse> => {
   return axios
     .post('/admin/login', credentials)
-    .then((response: AxiosResponse) => response.data as PersonaLoginResponse)
-    .catch((error: AxiosError) => {
-      const customErrors = error?.response?.data as CustomError;
-      if (customErrors) {
-        throw new Error(customErrors.error.message);
-      }
-      throw error;
-    });
+    .then((response: AxiosResponse) => response.data as PersonaAuthResponse);
+};
+
+export const registerUser = (
+  data: UserRegisterRequest,
+): Promise<PersonaAuthResponse> => {
+  return axios
+    .post('/user/register', data)
+    .then((response: AxiosResponse) => response.data as PersonaAuthResponse);
 };

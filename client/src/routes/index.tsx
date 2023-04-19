@@ -11,7 +11,8 @@ export const AppRoutes = () => {
 
   const commonRoutes = [{ path: '/', element: <Landing /> }];
 
-  const routes = persona ? protectedRoutes : publicRoutes;
+  // TODO: instead set up redirection route
+  const routes = persona ? [...protectedRoutes, ...publicRoutes] : publicRoutes;
 
   const element = useRoutes([...routes, ...commonRoutes]);
 

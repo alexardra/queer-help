@@ -6,8 +6,9 @@ import { Register } from './Register';
 export const AuthRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="register" element={<Register />} />
-      <Route path="login" element={<Login />} />
+      <Route path="/user/register" element={<Register />} />
+      <Route path="/user/login" element={<Login personaType="user" />} />
+      <Route path="/admin/login" element={<Login personaType="admin" />} />
     </Routes>
   );
 };

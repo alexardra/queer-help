@@ -1,4 +1,8 @@
-import Axios, { InternalAxiosRequestConfig } from 'axios';
+import Axios, {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import { API_URL } from '@/config';
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
@@ -16,3 +20,15 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(authRequestInterceptor);
+
+axios.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    const customErrors = error?.response?.data as {
+      error: { message: string };
+    };
+    return Promise.reject(customErrors ?? error);
+  },
+);

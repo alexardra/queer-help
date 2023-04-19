@@ -13,7 +13,8 @@ export type InputProps = {
   error?: string;
 
   value: number | string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange: React.Dispatch<React.SetStateAction<any>>;
 };
 
 export const Input: React.FC<InputProps> = (props: InputProps) => {

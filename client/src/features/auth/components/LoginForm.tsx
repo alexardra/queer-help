@@ -3,13 +3,13 @@ import { Input } from '@/components/Input';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
-import { PersonaLoginRequest, PersonaLoginResponse } from '@/features/auth/api';
+import { PersonaLoginRequest, PersonaAuthResponse } from '@/features/auth/api';
 
 type LoginFormProps = {
   loginPersona: (
     credentials: PersonaLoginRequest,
-  ) => Promise<PersonaLoginResponse>;
-  onSuccess: (response: PersonaLoginResponse) => void;
+  ) => Promise<PersonaAuthResponse>;
+  onSuccess: (response: PersonaAuthResponse) => void;
 };
 
 export const LoginForm: React.FC<LoginFormProps> = ({
