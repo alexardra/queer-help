@@ -1,23 +1,32 @@
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { PersonaAuthResponse, loginAdmin, loginUser } from '../api';
-import { PersonaType } from '../types';
-
+import {
+  PersonaAuthResponse,
+  PersonaRole,
+  PersonaRoleTypes,
+  loginAdmin,
+  loginUser,
+} from '../api';
 import { LoginForm } from '../components/LoginForm';
 
 type LoginProps = {
-  personaType: PersonaType;
+  personaRole: PersonaRole;
 };
 
-export const Login: React.FC<LoginProps> = ({ personaType }: LoginProps) => {
+export const Login: React.FC<LoginProps> = ({ personaRole }: LoginProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const loginAction = {
-    admin: loginAdmin,
-    user: loginUser,
-  }[personaType];
+    [PersonaRoleTypes.ADMIN]: loginAdmin,
+    [PersonaRoleTypes.USER]: loginUser,
+  }[personaRole];
+
+  const nextRoute = {
+    [PersonaRoleTypes.ADMIN]: '/dashboard',
+    [PersonaRoleTypes.USER]: '/portal',
+  }[personaRole];
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -27,7 +36,7 @@ export const Login: React.FC<LoginProps> = ({ personaType }: LoginProps) => {
           window.localStorage.setItem('token', authResponse.token);
           void queryClient.invalidateQueries({ queryKey: ['auth'] });
 
-          navigate('/dashboard');
+          navigate(nextRoute);
         }}
       />
     </div>

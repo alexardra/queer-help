@@ -1,4 +1,4 @@
-import { IUser, IUserDto } from '@/interfaces/personas';
+import { IUser, IUserDto, PersonaRoleTypes } from '@/interfaces/personas';
 
 export default class UserMapper {
   static toDTO(user: IUser) {
@@ -9,6 +9,7 @@ export default class UserMapper {
     userDto.firstname = user.firstname;
     userDto.lastname = user.lastname;
     userDto.verificationStatus = user.verificationStatus;
+    userDto.role = PersonaRoleTypes.USER;
 
     return userDto;
   }

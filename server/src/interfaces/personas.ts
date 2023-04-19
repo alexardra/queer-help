@@ -6,6 +6,10 @@ interface TokenPayload {
 }
 
 /********** Persona **********/
+export enum PersonaRoleTypes {
+  ADMIN = 'admin',
+  USER = 'user',
+}
 
 interface IPersona {
   _id: string;
@@ -20,6 +24,7 @@ interface IPersonaDto {
   email: string;
   firstname: string;
   lastname: string;
+  role: PersonaRoleTypes.ADMIN | PersonaRoleTypes.USER;
 }
 
 interface IPersonaDocument extends IPersona {

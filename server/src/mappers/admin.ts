@@ -1,4 +1,4 @@
-import { IAdmin, IAdminDto } from '@/interfaces/personas';
+import { IAdmin, IAdminDto, PersonaRoleTypes } from '@/interfaces/personas';
 
 export default class AdminMapper {
   static toDTO(admin: IAdmin) {
@@ -8,6 +8,7 @@ export default class AdminMapper {
     adminDto.email = admin.email;
     adminDto.firstname = admin.firstname;
     adminDto.lastname = admin.lastname;
+    adminDto.role = PersonaRoleTypes.ADMIN;
 
     return adminDto;
   }

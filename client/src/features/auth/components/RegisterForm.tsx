@@ -16,7 +16,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [referenceLinks, setReferenceLinks] = useState([]);
-  const [personalNumber, setPersonalNumber] = useState(0);
+  const [personalNumber, setPersonalNumber] = useState();
 
   const useRegister = useMutation({
     mutationFn: registerUser,
@@ -33,6 +33,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
         onSubmit={(e) => {
           e.preventDefault();
+
+          if (!personalNumber) return;
 
           useRegister.mutate({
             email,

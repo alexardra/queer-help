@@ -12,7 +12,7 @@ export type InputProps = {
 
   error?: string;
 
-  value: number | string;
+  value?: number | string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: React.Dispatch<React.SetStateAction<any>>;
 };

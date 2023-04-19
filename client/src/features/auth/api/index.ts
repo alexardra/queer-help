@@ -1,11 +1,18 @@
 import { axios } from '@/lib/axios';
 import { AxiosResponse } from 'axios';
 
+export enum PersonaRoleTypes {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+export type PersonaRole = PersonaRoleTypes.ADMIN | PersonaRoleTypes.USER;
+
 export type PersonaCredentials = {
   id: string;
   email: string;
   firstname: string;
   lastname: string;
+  role: PersonaRole;
 };
 
 export type PersonaLoginRequest = {
@@ -28,7 +35,9 @@ export type UserRegisterRequest = {
 };
 
 export const fetchPersona = (): Promise<PersonaCredentials> => {
-  return axios.get('/auth/me');
+  return axios
+    .get('/auth/me')
+    .then((response: AxiosResponse) => response.data as PersonaCredentials);
 };
 
 export const loginUser = (
