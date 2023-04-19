@@ -16,7 +16,7 @@ const getTokenFromHeader = (req: Request) => {
 
 export const isAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = getTokenFromHeader(req);
-  console.log(token);
+
   if (!token) {
     throw new AuthError();
   }
@@ -25,7 +25,6 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
     (<TokenRequest>req).token = jwtPayload;
     next();
   } catch (error) {
-    console.log(error);
     throw new AuthError();
   }
 };

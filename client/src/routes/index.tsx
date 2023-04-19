@@ -1,16 +1,19 @@
-import { RouteObject } from 'react-router-dom';
-import { Landing } from '@/features/misc';
-import { createBrowserRouter } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 
+import { Landing } from '@/features/misc';
+import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';
 
-const AppRoutes = () => {
+import useAuth from '@/hooks/useAuth';
+
+export const AppRoutes = () => {
+  const { persona } = useAuth();
+
   const commonRoutes = [{ path: '/', element: <Landing /> }];
 
-  const routes = publicRoutes;
-  return [...routes, ...commonRoutes] as RouteObject[];
+  const routes = persona ? protectedRoutes : publicRoutes;
+
+  const element = useRoutes([...routes, ...commonRoutes]);
+
+  return <>{element}</>;
 };
-
-const router = createBrowserRouter(AppRoutes());
-
-export const BrowserRouter = router;

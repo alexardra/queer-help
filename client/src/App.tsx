@@ -1,6 +1,6 @@
-import { RouterProvider } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter } from '@/routes';
+import { AppRoutes } from '@/routes';
 
 import './App.css';
 
@@ -17,7 +17,9 @@ function App() {
   return (
     <div className="App">
       <QueryClientProvider client={queryClilent}>
-        <RouterProvider router={BrowserRouter} />
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
       </QueryClientProvider>
     </div>
   );

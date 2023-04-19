@@ -1,20 +1,11 @@
-import { useQuery, QueryFunction } from '@tanstack/react-query';
-import {
-  PersonaLoginRequest,
-  PersonaLoginResponse,
-  loginUser,
-} from '@/features/auth/api';
+import { fetchPersona } from '@/features/auth/api';
+import { useQuery } from '@tanstack/react-query';
 
-export function useLogin(credentials: PersonaLoginRequest) {
-  const loginUserQueryFn: QueryFunction<
-    PersonaLoginResponse,
-    ['loginUser', PersonaLoginRequest]
-  > = async ({ queryKey }) => {
-    const credentials: PersonaLoginRequest = queryKey[1];
-    const user = await loginUser(credentials);
+export default function useAuth() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['auth', 'me'],
+    queryFn: fetchPersona,
+  });
 
-    return user;
-  };
-
-  return useQuery(['loginUser', credentials], loginUserQueryFn);
+  return { persona: !isLoading && !isError ? data : null };
 }

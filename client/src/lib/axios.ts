@@ -1,8 +1,18 @@
-import Axios from 'axios';
+import Axios, { InternalAxiosRequestConfig } from 'axios';
 import { API_URL } from '@/config';
 
-console.log(API_URL);
+function authRequestInterceptor(config: InternalAxiosRequestConfig) {
+  const token = window.localStorage.getItem('token');
+
+  if (token) {
+    config.headers.authorization = `Bearer ${token}`;
+  }
+  config.headers.Accept = 'application/json';
+  return config;
+}
 
 export const axios = Axios.create({
   baseURL: API_URL,
 });
+
+axios.interceptors.request.use(authRequestInterceptor);
