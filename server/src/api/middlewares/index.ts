@@ -1,6 +1,6 @@
 import { validator, Resource } from './validator';
 
-import { isAuth } from './auth';
+import { attachPersona, isAuth } from './auth';
 import { isAdmin, attachAdmin } from './admin';
 import { isVerifiedUser, attachUser } from './user';
 
@@ -9,6 +9,8 @@ export default {
   Resource,
 
   isAuth,
+  attachPersona,
+
   isAdmin,
   attachAdmin,
   isVerifiedUser,

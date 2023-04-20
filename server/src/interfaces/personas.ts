@@ -62,6 +62,7 @@ type IAdminDocument = IPersonaDocument & IAdmin;
 export {
   TokenPayload,
   UserVerificationStatus,
+  IPersona,
   IUser,
   IUserDto,
   IUserDocument,

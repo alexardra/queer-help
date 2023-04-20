@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import tasks from './routes/tasks';
 import user from './routes/user';
 import admin from './routes/admin';
 import auth from './routes/auth';
+import assistances from './routes/assistances';
 
 export default () => {
   const app = Router();
@@ -10,7 +10,7 @@ export default () => {
   auth(app);
   user(app);
   admin(app);
-  tasks(app);
+  assistances(app);
 
   return app;
 };
