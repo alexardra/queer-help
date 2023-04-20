@@ -19,7 +19,7 @@ export const Register: React.FC = () => {
             window.localStorage.setItem('token', authResponse.token);
             void queryClient.invalidateQueries({ queryKey: ['auth'] });
 
-            navigate('/dashboard');
+            navigate('/user/portal');
           }}
         />
       </div>

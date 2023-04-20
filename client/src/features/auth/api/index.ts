@@ -25,6 +25,12 @@ export type PersonaAuthResponse = {
   token: string;
 };
 
+export enum UserRole {
+  Beneficiary = 1,
+  Volunteer = 2,
+  Both = 3,
+}
+
 export type UserRegisterRequest = {
   email: string;
   password: string;
@@ -32,6 +38,9 @@ export type UserRegisterRequest = {
   lastname: string;
   referenceLinks: string[];
   personalNumber: string;
+  role: UserRole;
+  phoneNumber?: string;
+  description?: string;
 };
 
 export const fetchPersona = (): Promise<PersonaCredentials> => {

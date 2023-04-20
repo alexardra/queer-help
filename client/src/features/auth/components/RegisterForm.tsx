@@ -1,8 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
-import { PersonaAuthResponse, UserRegisterRequest, registerUser } from '../api';
+import {
+  PersonaAuthResponse,
+  UserRegisterRequest,
+  UserRole,
+  registerUser,
+} from '../api';
 import { useState } from 'react';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
+import { SelectUserRoleInput } from './SelectUserRoleInput';
+import { TextArea } from '@/components/TextArea';
 
 type RegisterFormProps = {
   registerPersona: (data: UserRegisterRequest) => Promise<PersonaAuthResponse>;
@@ -12,12 +19,17 @@ type RegisterFormProps = {
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSuccess,
 }: RegisterFormProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [referenceLink, setReferenceLink] = useState('');
-  const [personalNumber, setPersonalNumber] = useState('');
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    referenceLink: '',
+    personalNumber: '',
+    role: UserRole.Beneficiary,
+    phoneNumber: '',
+    description: '',
+  });
 
   const useRegister = useMutation({
     mutationFn: registerUser,
@@ -26,19 +38,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
   const errorMessage = 'Invalid credentials, please try again';
 
+  const isVolunteerUser =
+    user.role === UserRole.Volunteer || user.role === UserRole.Both;
+
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <form
         className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
         onSubmit={(e) => {
           e.preventDefault();
-
+          const { referenceLink, ...data } = user;
           useRegister.mutate({
-            email,
-            password,
-            firstname,
-            lastname,
-            personalNumber,
+            ...data,
             referenceLinks: [referenceLink],
           });
         }}
@@ -48,48 +59,86 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           type={'email'}
           required
           disabled={useRegister.isLoading}
-          value={email}
-          onChange={setEmail}
+          value={user.email}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, email: value }));
+          }}
         />
         <Input
           label="Password"
           type={'password'}
           required
           disabled={useRegister.isLoading}
-          value={password}
-          onChange={setPassword}
+          value={user.password}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, password: value }));
+          }}
         />
         <Input
           label="Firstname"
           type={'text'}
           required
           disabled={useRegister.isLoading}
-          value={firstname}
-          onChange={setFirstname}
+          value={user.firstname}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, firstname: value }));
+          }}
         />
         <Input
           label="Lastname"
           type={'text'}
           required
           disabled={useRegister.isLoading}
-          value={lastname}
-          onChange={setLastname}
+          value={user.lastname}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, lastname: value }));
+          }}
         />
         <Input
           label="Reference Link"
-          type={'text'}
+          type={'url'}
           required
           disabled={useRegister.isLoading}
-          value={referenceLink}
-          onChange={setReferenceLink}
+          value={user.referenceLink}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, referenceLink: value }));
+          }}
         />
         <Input
           label="Personal number"
           type={'string'}
           required
           disabled={useRegister.isLoading}
-          value={personalNumber}
-          onChange={setPersonalNumber}
+          value={user.personalNumber}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, personalNumber: value }));
+          }}
+        />
+        <SelectUserRoleInput
+          required
+          disabled={useRegister.isLoading}
+          value={user.role}
+          onChange={(value: number) => {
+            setUser((prevState) => ({ ...prevState, role: value }));
+          }}
+        />
+        <Input
+          label="Phone number"
+          type={'string'}
+          required={isVolunteerUser}
+          disabled={useRegister.isLoading}
+          value={user.phoneNumber}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, phoneNumber: value }));
+          }}
+        />
+        <TextArea
+          value={user.description}
+          required={isVolunteerUser}
+          disabled={useRegister.isLoading}
+          onChange={(value: string) => {
+            setUser((prevState) => ({ ...prevState, description: value }));
+          }}
         />
         {useRegister.isError && (
           <p className="relative rounded border border-red-400 bg-red-100 px-3 py-1 text-xs text-red-700">

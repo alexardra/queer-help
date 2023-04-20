@@ -1,23 +1,24 @@
-import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import { ChangeEvent } from 'react';
 
-export type InputProps = {
+export type TextAreaProps = {
   id?: string;
   name?: string;
   label?: string;
+  rows?: number;
+  cols?: number;
 
-  type: HTMLInputTypeAttribute;
   required?: boolean;
   disabled?: boolean;
   placeholder?: string;
 
-  error?: string;
-
-  value?: number | string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange: (value: any) => void;
+  value?: string;
+  onChange: (value: string) => void;
 };
 
-export const Input: React.FC<InputProps> = (props: InputProps) => {
+export const TextArea: React.FC<TextAreaProps> = (props: TextAreaProps) => {
+  const rows = props.rows ?? 4;
+  const cols = props.cols ?? 50;
+
   return (
     <div className="flex flex-col items-start gap-y-1">
       {props.label && (
@@ -28,12 +29,13 @@ export const Input: React.FC<InputProps> = (props: InputProps) => {
           {props.label}
         </label>
       )}
-      <input
+      <textarea
         className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         id={props.id}
         name={props.name}
         value={props.value}
-        type={props.type}
+        rows={rows}
+        cols={cols}
         onChange={(e: ChangeEvent) => {
           props.onChange((e.target as HTMLTextAreaElement).value);
         }}
@@ -41,15 +43,6 @@ export const Input: React.FC<InputProps> = (props: InputProps) => {
         required={props.required}
         disabled={props.disabled}
       />
-      {!!props.error && (
-        <div
-          role="alert"
-          aria-label={props.error}
-          className="text-sm font-semibold text-red-500"
-        >
-          {props.error}
-        </div>
-      )}
     </div>
   );
 };
