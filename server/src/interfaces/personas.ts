@@ -39,10 +39,19 @@ enum UserVerificationStatus {
   Failed = 'Failed',
 }
 
+enum UserRole {
+  Beneficiary = 1,
+  Volunteer = 2,
+  Both = 3,
+}
+
 interface IUser extends IPersona {
   referenceLinks: string[];
   personalNumber: number;
   verificationStatus: UserVerificationStatus;
+  role: UserRole;
+  phoneNumber?: string;
+  description?: string;
 }
 
 interface IUserDto extends IPersonaDto {
@@ -62,6 +71,7 @@ type IAdminDocument = IPersonaDocument & IAdmin;
 export {
   TokenPayload,
   UserVerificationStatus,
+  UserRole,
   IPersona,
   IUser,
   IUserDto,

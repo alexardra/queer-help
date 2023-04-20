@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
-import { IUserDocument } from '@/interfaces/personas';
+import { IUserDocument, UserRole } from '@/interfaces/personas';
 
 const UserSchema: Schema<IUserDocument> = new Schema(
   {
@@ -47,6 +47,27 @@ const UserSchema: Schema<IUserDocument> = new Schema(
         true,
         'Please provide personal number for verification purposes',
       ],
+    },
+    role: {
+      type: Number,
+      enum: {
+        values: [UserRole.Beneficiary, UserRole.Volunteer, UserRole.Both],
+      },
+      required: [true, 'Please provide role you would like to register for'],
+    },
+    phoneNumber: {
+      type: String,
+      required: function (this: IUserDocument) {
+        return this.role === UserRole.Volunteer || this.role === UserRole.Both;
+      },
+      minlength: 9,
+      maxlength: 20,
+    },
+    description: {
+      type: String,
+      required: function (this: IUserDocument) {
+        return this.role === UserRole.Volunteer || this.role === UserRole.Both;
+      },
     },
   },
   {

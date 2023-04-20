@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
 import { BadRequestError } from '@/errors';
-import { UserVerificationStatus } from '@/interfaces/personas';
+import { UserRole, UserVerificationStatus } from '@/interfaces/personas';
 
 export enum Resource {
   LOGIN = 'login',
@@ -22,8 +22,26 @@ const schemas = {
     referenceLinks: Joi.array().min(1).items(Joi.string()).required(),
     personalNumber: Joi.number().required(),
     verificationStatus: Joi.string().valid(
-      ...Object.values(UserVerificationStatus),
+      UserVerificationStatus.Pending,
+      UserVerificationStatus.Verified,
+      UserVerificationStatus.Failed,
     ),
+    role: Joi.number()
+      .valid(UserRole.Beneficiary, UserRole.Volunteer, UserRole.Both)
+      .required(),
+    phoneNumber: Joi.string()
+      .min(9)
+      .max(20)
+      .when('role', {
+        is: Joi.any().valid(UserRole.Volunteer, UserRole.Both),
+        then: Joi.required(),
+        otherwise: Joi.any(),
+      }),
+    description: Joi.string().when('role', {
+      is: Joi.any().valid(UserRole.Volunteer, UserRole.Both),
+      then: Joi.required(),
+      otherwise: Joi.any(),
+    }),
   }),
   registerAdmin: Joi.object().keys({
     email: Joi.string().required(),

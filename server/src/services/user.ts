@@ -2,7 +2,11 @@ import { Model } from 'mongoose';
 import { createJWT } from '@/utils/jwt';
 import { BadRequestError } from '@/errors';
 
-import { IUserDocument, UserVerificationStatus } from '@/interfaces/personas';
+import {
+  IUserDocument,
+  UserRole,
+  UserVerificationStatus,
+} from '@/interfaces/personas';
 import AuthService from './auth';
 
 export default class UserService extends AuthService {
@@ -17,6 +21,9 @@ export default class UserService extends AuthService {
     lastname,
     referenceLinks,
     personalNumber,
+    role,
+    phoneNumber,
+    description,
   }: {
     email: string;
     password: string;
@@ -24,6 +31,9 @@ export default class UserService extends AuthService {
     lastname: string;
     referenceLinks: string[];
     personalNumber: number;
+    role: UserRole;
+    phoneNumber?: number;
+    description?: string;
   }) {
     const alreadyExists = await this.personaAlreadyExists(email);
     if (alreadyExists) {
@@ -36,6 +46,9 @@ export default class UserService extends AuthService {
       lastname,
       referenceLinks,
       personalNumber,
+      role,
+      phoneNumber,
+      description,
       verificationStatus: UserVerificationStatus.Pending,
     });
     const token = createJWT({ personaId: user._id, email });

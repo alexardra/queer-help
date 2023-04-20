@@ -25,6 +25,9 @@ export default (app: Router) => {
         lastname,
         referenceLinks,
         personalNumber,
+        role,
+        phoneNumber,
+        description,
       } = req.body;
 
       const { user, token } = await userService.register({
@@ -34,6 +37,9 @@ export default (app: Router) => {
         lastname,
         referenceLinks,
         personalNumber,
+        role,
+        phoneNumber,
+        description,
       });
       res
         .status(StatusCodes.CREATED)
