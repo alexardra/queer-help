@@ -25,7 +25,7 @@ const AssistanceSchema: Schema = new Schema(
     status: {
       type: String,
       enum: {
-        values: ['ongoing', 'done', 'canceled'],
+        values: ['active', 'done', 'canceled'],
       },
       required: true,
     },

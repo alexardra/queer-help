@@ -9,6 +9,7 @@ export default class AssistanceService {
     const createdAssistance = await this.assistanceModel.create({
       authorId,
       ...assistance,
+      status: 'active', // TODO: enum would be a better choice
     });
     return createdAssistance;
   }

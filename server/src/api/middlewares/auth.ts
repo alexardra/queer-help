@@ -54,7 +54,7 @@ export const attachPersona = async (
 
     (<ProtectedRequest>req).persona = userRecord as IPersona;
     (<ProtectedRequest>req).role = PersonaRoleTypes.USER;
-    next();
+    return next();
   } catch (e) {
     // not a user
   }

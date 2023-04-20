@@ -23,7 +23,7 @@ export default (app: Router) => {
 
       const assistances = await assistanceService.getAssistances();
 
-      res.status(StatusCodes.OK).json({
+      return res.status(StatusCodes.OK).json({
         assistances: assistances.map((a) => AssistanceMapper.toDTO(a)),
         count: assistances.length,
       });
@@ -42,7 +42,27 @@ export default (app: Router) => {
         persona._id,
       );
 
-      res.status(StatusCodes.OK).json(AssistanceMapper.toDTO(assistance));
+      return res
+        .status(StatusCodes.OK)
+        .json({ assistance: AssistanceMapper.toDTO(assistance) });
+    },
+  );
+
+  route.post(
+    '/',
+    middlewares.isAuth,
+    middlewares.attachPersona,
+    middlewares.validator(middlewares.Resource.ASSISTANCE),
+    async (req: Request, res: Response) => {
+      const persona = (<ProtectedRequest>req).persona;
+
+      const assistance = await assistanceService.createAssistance(
+        persona._id,
+        req.body,
+      );
+      return res
+        .status(StatusCodes.CREATED)
+        .json({ assistance: AssistanceMapper.toDTO(assistance) });
     },
   );
 };

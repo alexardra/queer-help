@@ -7,6 +7,7 @@ export enum Resource {
   LOGIN = 'login',
   REGISTER_USER = 'registerUser',
   REGISTER_ADMIN = 'registerAdmin',
+  ASSISTANCE = 'assistance',
 }
 
 const schemas = {
@@ -48,6 +49,11 @@ const schemas = {
     password: Joi.string().required(),
     firstname: Joi.string().min(3).max(50).required(),
     lastname: Joi.string().min(3).max(50).required(),
+  }),
+  assistance: Joi.object().keys({
+    category: Joi.string().required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
   }),
 };
 
