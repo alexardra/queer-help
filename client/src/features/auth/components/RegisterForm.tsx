@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { PersonaAuthResponse, UserRegisterRequest, registerUser } from '../api';
 import { useState } from 'react';
 import { Input } from '@/components/Input';
+import { Button } from '@/components/Button';
 
 type RegisterFormProps = {
   registerPersona: (data: UserRegisterRequest) => Promise<PersonaAuthResponse>;
@@ -15,17 +16,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const [password, setPassword] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [referenceLinks, setReferenceLinks] = useState([]);
-  const [personalNumber, setPersonalNumber] = useState();
+  const [referenceLink, setReferenceLink] = useState('');
+  const [personalNumber, setPersonalNumber] = useState('');
 
   const useRegister = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => onSuccess(data),
   });
 
-  const errorMessage = useRegister.isError
-    ? (useRegister.error as Error).message
-    : '';
+  const errorMessage = 'Invalid credentials, please try again';
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -34,15 +33,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         onSubmit={(e) => {
           e.preventDefault();
 
-          if (!personalNumber) return;
-
           useRegister.mutate({
             email,
             password,
             firstname,
             lastname,
             personalNumber,
-            referenceLinks: referenceLinks.join('\n'),
+            referenceLinks: [referenceLink],
           });
         }}
       >
@@ -78,15 +75,31 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           value={lastname}
           onChange={setLastname}
         />
-        {/* <!-- reference links here - -> */}
+        <Input
+          label="Reference Link"
+          type={'text'}
+          required
+          disabled={useRegister.isLoading}
+          value={referenceLink}
+          onChange={setReferenceLink}
+        />
         <Input
           label="Personal number"
-          type={'number'}
+          type={'string'}
           required
           disabled={useRegister.isLoading}
           value={personalNumber}
           onChange={setPersonalNumber}
         />
+        {useRegister.isError && (
+          <p className="relative rounded border border-red-400 bg-red-100 px-3 py-1 text-xs text-red-700">
+            {errorMessage}
+          </p>
+        )}
+
+        <Button type="submit" disabled={useRegister.isLoading}>
+          {!useRegister.isLoading ? 'Submit' : 'Loading...'}
+        </Button>
       </form>
     </div>
   );

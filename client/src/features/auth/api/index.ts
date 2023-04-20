@@ -30,8 +30,8 @@ export type UserRegisterRequest = {
   password: string;
   firstname: string;
   lastname: string;
-  referenceLinks: string;
-  personalNumber: number;
+  referenceLinks: string[];
+  personalNumber: string;
 };
 
 export const fetchPersona = (): Promise<PersonaCredentials> => {

@@ -59,7 +59,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             {errorMessage}
           </p>
         )}
-        <Button type="submit">
+        <Button type="submit" disabled={useLogin.isLoading}>
           {!useLogin.isLoading ? 'Submit' : 'Loading...'}
         </Button>
       </form>

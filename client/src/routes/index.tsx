@@ -10,7 +10,7 @@ import { PersonaRoleTypes } from '@/features/auth/api';
 
 export const AppRoutes = () => {
   const { persona } = useAuth();
-  console.log(persona);
+
   const commonRoutes = [{ path: '/', element: <Landing /> }];
   let allRoutes = [...publicRoutes, ...commonRoutes];
 
@@ -21,7 +21,6 @@ export const AppRoutes = () => {
     }[persona.role];
     allRoutes = [...allRoutes, ...protectedRoutes];
   }
-  console.log('routes', allRoutes);
 
   const element = useRoutes(allRoutes);
   return <>{element}</>;
