@@ -97,8 +97,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           </p>
         )}
 
-        <Button type="submit" disabled={useRegister.isLoading}>
-          {!useRegister.isLoading ? 'Submit' : 'Loading...'}
+        <Button
+          type="submit"
+          disabled={useRegister.isLoading}
+          isLoading={useRegister.isLoading}
+        >
+          Sign up
         </Button>
       </form>
     </div>

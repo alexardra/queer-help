@@ -1,17 +1,17 @@
-import { Portal, NotFound } from '@/features/misc';
-import { Profile } from '@/features/user';
+import { NotFound } from '@/features/misc';
 import { Route, Routes } from 'react-router-dom';
+import { Portal, Profile } from '@/features/user';
+import { UserLayout } from '@/features/user/components/UserLayout';
 
 const UserApp = () => {
   return (
-    <div>
-      <h1>Main layout - Admin App</h1>
+    <UserLayout>
       <Routes>
         <Route path="/portal" element={<Portal />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
-    </div>
+    </UserLayout>
   );
 };
 
