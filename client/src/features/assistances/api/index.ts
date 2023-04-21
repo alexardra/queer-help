@@ -1,18 +1,49 @@
-import axios, { AxiosResponse } from 'axios';
+import { axios } from '@/lib/axios';
+import { AxiosResponse } from 'axios';
 
 export type Assistance = {
-  category: string;
+  id: string;
+  category: AssistanceCategory;
   status: string;
   title: string;
   description: string;
 };
 
-export const getAssistances = (): Promise<Assistance[]> => {
-  return axios
-    .get('/assistances')
-    .then((response: AxiosResponse) => response.data as Assistance[]);
+export enum AssistanceCategory {
+  DOCTOR_CONSULTATION = 1,
+  LEGAL_CONSULTATION = 2,
+  FINANCIAL_ADVISE = 3,
+  TECHNICAL_SUPPORT = 4,
+  EDUCATIONAL_ADVISE = 5,
+  HELP_WITH_SPECIFIC_ITEM = 6,
+}
+
+export const AsistanceCategoryMap = {
+  [AssistanceCategory.DOCTOR_CONSULTATION]: 'Doctor consultation',
+  [AssistanceCategory.LEGAL_CONSULTATION]: 'Legal consultation',
+  [AssistanceCategory.FINANCIAL_ADVISE]: 'Financial advise',
+  [AssistanceCategory.TECHNICAL_SUPPORT]: 'Technical support',
+  [AssistanceCategory.EDUCATIONAL_ADVISE]: 'Educational advise',
+  [AssistanceCategory.HELP_WITH_SPECIFIC_ITEM]: 'Help with specific item',
 };
 
-export const createAssistance = (assistance: Assistance) => {
+export type FetchAssistancesResponse = {
+  assistances: Assistance[];
+  count: number;
+};
+
+export const fetchAssistances = (): Promise<FetchAssistancesResponse> => {
+  return axios
+    .get('/assistances')
+    .then(
+      (response: AxiosResponse) => response.data as FetchAssistancesResponse,
+    );
+};
+
+export const createAssistance = (assistance: {
+  category: AssistanceCategory;
+  title: string;
+  description: string;
+}) => {
   return axios.post('/assistances', assistance);
 };

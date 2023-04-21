@@ -1,5 +1,9 @@
 import mongoose, { Schema } from 'mongoose';
-import { IAssistance } from '@/interfaces/assistance';
+import {
+  AssistanceCategory,
+  AssistanceStatus,
+  IAssistance,
+} from '@/interfaces/assistance';
 
 const AssistanceSchema: Schema = new Schema(
   {
@@ -12,12 +16,12 @@ const AssistanceSchema: Schema = new Schema(
       type: String,
       enum: {
         values: [
-          'Doctor consultation',
-          'Legal consultation',
-          'Financial advise',
-          'Technical support',
-          'Educational advise',
-          'Help with specific item',
+          AssistanceCategory.DOCTOR_CONSULTATION,
+          AssistanceCategory.LEGAL_CONSULTATION,
+          AssistanceCategory.FINANCIAL_ADVISE,
+          AssistanceCategory.TECHNICAL_SUPPORT,
+          AssistanceCategory.EDUCATIONAL_ADVISE,
+          AssistanceCategory.HELP_WITH_SPECIFIC_ITEM,
         ],
       },
       required: true,
@@ -25,7 +29,11 @@ const AssistanceSchema: Schema = new Schema(
     status: {
       type: String,
       enum: {
-        values: ['active', 'done', 'canceled'],
+        values: [
+          AssistanceStatus.ACTIVE,
+          AssistanceStatus.DONE,
+          AssistanceStatus.CANCELED,
+        ],
       },
       required: true,
     },

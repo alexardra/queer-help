@@ -1,6 +1,10 @@
 import { Model } from 'mongoose';
 import { BadRequestError, ForbiddenError, NotFoundError } from '@/errors';
-import { IAssistance, IAssistanceDto } from '@/interfaces/assistance';
+import {
+  AssistanceStatus,
+  IAssistance,
+  IAssistanceDto,
+} from '@/interfaces/assistance';
 
 export default class AssistanceService {
   constructor(private assistanceModel: Model<IAssistance>) {}
@@ -9,7 +13,7 @@ export default class AssistanceService {
     const createdAssistance = await this.assistanceModel.create({
       authorId,
       ...assistance,
-      status: 'active', // TODO: enum would be a better choice
+      status: AssistanceStatus.ACTIVE,
     });
     return createdAssistance;
   }

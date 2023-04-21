@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean;
 };
 
-type UserRoleOption = 'Beneficiary' | 'Volunteer' | 'Both';
+type UserRoleOptionType = 'Beneficiary' | 'Volunteer' | 'Both';
 
 const UserRoleOptions = {
   Beneficiary: UserRole.Beneficiary,
@@ -38,7 +38,7 @@ export const SelectUserRoleInput: React.FC<Props> = (props: Props) => {
         value={selected}
         onChange={(e: ChangeEvent) => {
           const selectedRole = (e.target as HTMLTextAreaElement)
-            .value as UserRoleOption;
+            .value as UserRoleOptionType;
           props.onChange(UserRoleOptions[selectedRole]);
         }}
       >

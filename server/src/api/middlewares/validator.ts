@@ -2,6 +2,7 @@ import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
 import { BadRequestError } from '@/errors';
 import { UserRole, UserVerificationStatus } from '@/interfaces/personas';
+import { AssistanceCategory } from '@/interfaces/assistance';
 
 export enum Resource {
   LOGIN = 'login',
@@ -51,7 +52,16 @@ const schemas = {
     lastname: Joi.string().min(3).max(50).required(),
   }),
   assistance: Joi.object().keys({
-    category: Joi.string().required(),
+    category: Joi.any()
+      .valid(
+        AssistanceCategory.DOCTOR_CONSULTATION,
+        AssistanceCategory.LEGAL_CONSULTATION,
+        AssistanceCategory.FINANCIAL_ADVISE,
+        AssistanceCategory.TECHNICAL_SUPPORT,
+        AssistanceCategory.EDUCATIONAL_ADVISE,
+        AssistanceCategory.HELP_WITH_SPECIFIC_ITEM,
+      )
+      .required(),
     title: Joi.string().required(),
     description: Joi.string().required(),
   }),
