@@ -44,3 +44,9 @@ export class ServiceUnavailableError extends ApiError {
     super(StatusCodes.SERVICE_UNAVAILABLE, message);
   }
 }
+
+export class ConflictError extends ApiError {
+  constructor(message: string = ReasonPhrases.CONFLICT) {
+    super(StatusCodes.CONFLICT, message);
+  }
+}

@@ -9,6 +9,8 @@ export enum Resource {
   REGISTER_USER = 'registerUser',
   REGISTER_ADMIN = 'registerAdmin',
   ASSISTANCE = 'assistance',
+  CHAT = 'chat',
+  MESSAGE = 'message',
 }
 
 const schemas = {
@@ -64,6 +66,14 @@ const schemas = {
       .required(),
     title: Joi.string().required(),
     description: Joi.string().required(),
+  }),
+  chat: Joi.object().keys({
+    receiverId: Joi.string().required(),
+    message: Joi.string().required(),
+  }),
+  message: Joi.object().keys({
+    chatId: Joi.string().required(),
+    text: Joi.string().required(),
   }),
 };
 
