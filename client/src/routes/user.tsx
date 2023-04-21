@@ -1,5 +1,5 @@
 import { NotFound } from '@/features/misc';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Portal, Profile } from '@/features/user';
 import { UserLayout } from '@/features/user/components/UserLayout';
 import { AssistanceCreate } from '@/features/assistances/routes/AssistanceCreate';

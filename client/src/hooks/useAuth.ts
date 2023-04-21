@@ -6,5 +6,5 @@ export default function useAuth() {
     queryKey: ['auth', 'me'],
     queryFn: fetchPersona,
   });
-  return { persona: !isLoading && !isError ? data : null };
+  return { persona: !isLoading && !isError ? data : null, isLoading, isError };
 }

@@ -1,6 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 
-import { Landing } from '@/features/misc';
+import { Landing, NotFound } from '@/features/misc';
 import { userRoutes } from './user';
 import { adminRoutes } from './admin';
 import { publicRoutes } from './public';

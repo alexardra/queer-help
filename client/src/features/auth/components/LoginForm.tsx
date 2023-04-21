@@ -29,44 +29,42 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     : '';
 
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <form
-        className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
-        onSubmit={(e) => {
-          e.preventDefault();
+    <form
+      className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
+      onSubmit={(e) => {
+        e.preventDefault();
 
-          useLogin.mutate({ email, password });
-        }}
+        useLogin.mutate({ email, password });
+      }}
+    >
+      <Input
+        label="Email"
+        type={'email'}
+        required
+        disabled={useLogin.isLoading}
+        value={email}
+        onChange={setEmail}
+      />
+      <Input
+        label="Password"
+        type={'password'}
+        required
+        disabled={useLogin.isLoading}
+        value={password}
+        onChange={setPassword}
+      />
+      {useLogin.isError && (
+        <p className="relative rounded border border-red-400 bg-red-100 px-3 py-1 text-xs text-red-700">
+          {errorMessage}
+        </p>
+      )}
+      <Button
+        type="submit"
+        disabled={useLogin.isLoading}
+        isLoading={useLogin.isLoading}
       >
-        <Input
-          label="Email"
-          type={'email'}
-          required
-          disabled={useLogin.isLoading}
-          value={email}
-          onChange={setEmail}
-        />
-        <Input
-          label="Password"
-          type={'password'}
-          required
-          disabled={useLogin.isLoading}
-          value={password}
-          onChange={setPassword}
-        />
-        {useLogin.isError && (
-          <p className="relative rounded border border-red-400 bg-red-100 px-3 py-1 text-xs text-red-700">
-            {errorMessage}
-          </p>
-        )}
-        <Button
-          type="submit"
-          disabled={useLogin.isLoading}
-          isLoading={useLogin.isLoading}
-        >
-          Log in
-        </Button>
-      </form>
-    </div>
+        Log in
+      </Button>
+    </form>
   );
 };

@@ -9,7 +9,6 @@ import {
   loginUser,
 } from '../api';
 import { LoginForm } from '../components/LoginForm';
-import { LandingHeader } from '@/features/misc/components/LandingHeader';
 
 type LoginProps = {
   personaRole: PersonaRole;
@@ -30,19 +29,16 @@ export const Login: React.FC<LoginProps> = ({ personaRole }: LoginProps) => {
   }[personaRole];
 
   return (
-    <>
-      <LandingHeader />
-      <div className="flex h-screen w-full items-center justify-center">
-        <LoginForm
-          loginPersona={loginAction}
-          onSuccess={(authResponse: PersonaAuthResponse) => {
-            window.localStorage.setItem('token', authResponse.token);
-            void queryClient.invalidateQueries({ queryKey: ['auth'] });
+    <div className="flex h-[calc(100vh-60px)] w-full items-center justify-center">
+      <LoginForm
+        loginPersona={loginAction}
+        onSuccess={(authResponse: PersonaAuthResponse) => {
+          window.localStorage.setItem('token', authResponse.token);
+          void queryClient.invalidateQueries({ queryKey: ['auth'] });
 
-            navigate(nextRoute);
-          }}
-        />
-      </div>
-    </>
+          navigate(nextRoute);
+        }}
+      />
+    </div>
   );
 };
