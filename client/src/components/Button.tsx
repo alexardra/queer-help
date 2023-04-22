@@ -3,10 +3,13 @@ import { classList } from '@/utils';
 import { Spinner } from './Spinner';
 
 const variants = {
-  primary: 'bg-purple-600 text-white shadow-sm',
-  inverse: 'bg-white text-purple-600 shadow-sm',
-  danger: 'bg-red-600 text-white shadow-sm',
-  plain: 'bg-inherit border-none text-white',
+  primary:
+    'bg-purple-600 text-white shadow-sm rounded-md border border-gray-300 font-medium ',
+  inverse:
+    'bg-white text-purple-600 shadow-sm rounded-md border border-gray-300 font-medium ',
+  danger:
+    'bg-red-600 text-white shadow-sm rounded-md border border-gray-300 font-medium ',
+  plain: 'border-none',
 };
 
 const sizes = {
@@ -45,7 +48,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         className={classList(
-          'flex items-center justify-center rounded-md border border-gray-300 font-medium hover:opacity-70 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60',
+          'flex items-center justify-center hover:opacity-80 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70',
           variants[variant],
           sizes[size],
           className,

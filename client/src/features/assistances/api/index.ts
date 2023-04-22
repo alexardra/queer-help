@@ -18,15 +18,6 @@ export enum AssistanceCategory {
   HELP_WITH_SPECIFIC_ITEM = 6,
 }
 
-export const AsistanceCategoryMap = {
-  [AssistanceCategory.DOCTOR_CONSULTATION]: 'Doctor consultation',
-  [AssistanceCategory.LEGAL_CONSULTATION]: 'Legal consultation',
-  [AssistanceCategory.FINANCIAL_ADVISE]: 'Financial advise',
-  [AssistanceCategory.TECHNICAL_SUPPORT]: 'Technical support',
-  [AssistanceCategory.EDUCATIONAL_ADVISE]: 'Educational advise',
-  [AssistanceCategory.HELP_WITH_SPECIFIC_ITEM]: 'Help with specific item',
-};
-
 export type FetchAssistancesResponse = {
   assistances: Assistance[];
   count: number;

@@ -20,7 +20,9 @@ export default (app: Router) => {
       const persona = (<ProtectedRequest>req).persona;
 
       if (role === PersonaRoleTypes.USER) {
-        res.status(StatusCodes.OK).json(UserMapper.toDTO(persona as IUser));
+        return res
+          .status(StatusCodes.OK)
+          .json(UserMapper.toDTO(persona as IUser));
       }
       res.status(StatusCodes.OK).json(AdminMapper.toDTO(persona as IAdmin));
     },

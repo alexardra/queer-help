@@ -10,9 +10,11 @@ export default class ChatService {
   public async createChat(
     senderId: string,
     receiverId: string,
+    assistanceId: string,
     message: string,
   ) {
     const session = await mongoose.connection.startSession();
+    console.log('create chat', assistanceId);
     let chat: IChat | undefined;
     await session.withTransaction(async () => {
       try {
@@ -20,6 +22,7 @@ export default class ChatService {
           [
             {
               members: [senderId, receiverId],
+              assistance: assistanceId,
             },
           ],
           { session },
@@ -49,9 +52,11 @@ export default class ChatService {
   }
 
   public async getUserChats(userId: string) {
-    const chats = await this.chatModel.find({
-      members: { $in: [userId] },
-    });
+    const chats = await this.chatModel
+      .find({
+        members: { $in: [userId] },
+      })
+      .populate('assistance');
     return chats;
   }
 

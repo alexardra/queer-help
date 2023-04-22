@@ -7,6 +7,7 @@ export default class ChatMapper {
     chatDto.id = chat._id;
     chatDto.createdAt = chat.createdAt;
     chatDto.updatedAt = chat.updatedAt;
+
     return chatDto;
   }
 }

@@ -1,12 +1,18 @@
 import { IChat } from '@/interfaces/messaging';
 import mongoose, { Schema } from 'mongoose';
 
-const ChatSchema: Schema<IChat> = new Schema(
+const ChatSchema: Schema = new Schema(
   {
+    assistance: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Assistance',
+      required: true,
+    },
     members: [
       {
         type: mongoose.Types.ObjectId,
         ref: 'User',
+        required: true,
       },
     ],
   },

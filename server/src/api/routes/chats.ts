@@ -9,6 +9,7 @@ import AssistanceModel from '@/models/Assistance';
 import AssistanceService from '@/services/assistance';
 import ChatMapper from '@/mappers/chat';
 import { InternalError } from '@/errors';
+import AssistanceMapper from '@/mappers/assistance';
 
 const route = Router();
 
@@ -32,6 +33,7 @@ export default (app: Router) => {
       const chat = await chatService.createChat(
         senderId,
         assistance.authorId.toString(),
+        assistance._id.toString(),
         message,
       );
       if (!chat) {
@@ -52,7 +54,10 @@ export default (app: Router) => {
       const chats = await chatService.getUserChats(personaId);
 
       res.status(StatusCodes.OK).json({
-        chats: chats.map((chat) => ChatMapper.toDTO(chat)),
+        chats: chats.map((chat) => ({
+          ...ChatMapper.toDTO(chat),
+          assistance: AssistanceMapper.toDTO(chat.assistance),
+        })),
         count: chats.length,
       });
     },
