@@ -7,6 +7,8 @@ import ChatModel from '@/models/Chat';
 import MessageModel from '@/models/Message';
 import AssistanceModel from '@/models/Assistance';
 import AssistanceService from '@/services/assistance';
+import ChatMapper from '@/mappers/chat';
+import { InternalError } from '@/errors';
 
 const route = Router();
 
@@ -32,7 +34,11 @@ export default (app: Router) => {
         assistance.authorId.toString(),
         message,
       );
-      res.status(StatusCodes.CREATED).json({ chat });
+      if (!chat) {
+        throw new InternalError('Could not create chat');
+      }
+
+      res.status(StatusCodes.CREATED).json({ chat: ChatMapper.toDTO(chat) });
     },
   );
 
@@ -46,7 +52,7 @@ export default (app: Router) => {
       const chats = await chatService.getUserChats(personaId);
 
       res.status(StatusCodes.OK).json({
-        chats,
+        chats: chats.map((chat) => ChatMapper.toDTO(chat)),
         count: chats.length,
       });
     },

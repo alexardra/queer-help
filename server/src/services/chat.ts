@@ -13,10 +13,10 @@ export default class ChatService {
     message: string,
   ) {
     const session = await mongoose.connection.startSession();
-    let chat;
+    let chat: IChat | undefined;
     await session.withTransaction(async () => {
       try {
-        [chat] = await this.chatModel.create(
+        const [newChat] = await this.chatModel.create(
           [
             {
               members: [senderId, receiverId],
@@ -24,19 +24,20 @@ export default class ChatService {
           ],
           { session },
         );
-        if (!chat) {
+        if (!newChat) {
           throw new Error('Could not create chat');
         }
         await this.messageModel.create(
           [
             {
-              chatId: chat._id,
+              chatId: newChat._id,
               text: message,
               senderId,
             },
           ],
           { session },
         );
+        chat = newChat;
       } catch (error) {
         await session.abortTransaction();
       } finally {
@@ -44,7 +45,7 @@ export default class ChatService {
         session.endSession();
       }
     });
-    return chat;
+    return chat as IChat | undefined;
   }
 
   public async getUserChats(userId: string) {

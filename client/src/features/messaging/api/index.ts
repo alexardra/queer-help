@@ -2,7 +2,7 @@ import { axios } from '@/lib/axios';
 import { AxiosResponse } from 'axios';
 
 export type Chat = {
-  _id: string;
+  id: string;
   createdAt: string;
   updatedAt: string;
   members: string[];

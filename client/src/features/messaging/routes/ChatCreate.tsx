@@ -28,7 +28,7 @@ export const ChatCreate = () => {
   const useCreateChat = useMutation({
     mutationFn: createChat,
     onSuccess: (chat: Chat) => {
-      navigate(`/user/chat/${chat._id}`);
+      navigate(`/user/chat/${chat.id}`);
     },
   });
 
