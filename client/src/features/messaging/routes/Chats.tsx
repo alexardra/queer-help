@@ -1,20 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Chat, FetchChatsResponse, fetchChats } from '../api';
+import { fetchChats } from '../api';
 import { Button } from '@/components/Button';
 import { Spinner } from '@/components/Spinner';
 import { Conversation } from '../components/Conversation';
-import { useState } from 'react';
 import { ConversationSummary } from '../components/ConversationSummary';
 
 export const Chats = () => {
   const navigate = useNavigate();
-
-  // const { chatId } = useParams();
-  // if (chatId) {
-  //   console.log('open selected chat');
-  // }
-  const [openChat, setOpenChat] = useState<undefined | Chat>();
+  const { chatId } = useParams();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['chats'],
@@ -44,6 +38,10 @@ export const Chats = () => {
     );
   }
   const { chats } = data;
+  let openChat;
+  if (chatId) {
+    openChat = chats.find((chat) => chat.id === chatId);
+  }
 
   return (
     <div className="p-4">
@@ -57,7 +55,7 @@ export const Chats = () => {
                 variant="plain"
                 className="!p-0"
                 onClick={() => {
-                  setOpenChat(chat);
+                  navigate(chat.id);
                 }}
               >
                 <ConversationSummary chat={chat} />

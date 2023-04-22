@@ -1,9 +1,45 @@
 import { Button } from '@/components/Button';
-import { Chat, createMessage } from '../api';
+import {
+  Chat,
+  FetchMessagesResponse,
+  createMessage,
+  getMessages,
+} from '../api';
 import { Message } from './Message';
 import { Input } from '@/components/Input';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+const ConversationContent = ({
+  data,
+  isLoading,
+  isError,
+}: {
+  data?: FetchMessagesResponse;
+  isLoading: boolean;
+  isError: boolean;
+}) => {
+  if (isLoading) {
+    return <div className="text-center text-sm text-gray-600">Loading...</div>;
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="text-center text-sm text-gray-800">
+        Something went wrong.. refresh
+      </div>
+    );
+  }
+
+  const { messages } = data;
+  return (
+    <div className="grid grid-cols-12 gap-y-1">
+      {messages.map((message) => (
+        <Message message={message} key={message.id} />
+      ))}
+    </div>
+  );
+};
 
 export const Conversation = ({ chat }: { chat: Chat }) => {
   const [message, setMessage] = useState('');
@@ -12,25 +48,21 @@ export const Conversation = ({ chat }: { chat: Chat }) => {
     mutationFn: createMessage,
   });
 
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['messages', chat.id],
+    queryFn: () => getMessages(chat.id),
+  });
+
   return (
     <div className="flex h-full flex-auto flex-col bg-gray-50 p-6">
       <div className="flex h-full flex-auto flex-shrink-0 flex-col rounded-2xl bg-white p-4">
         <div className="mb-4 flex h-full flex-col overflow-x-auto">
           <div className="flex h-full flex-col">
-            <div className="grid grid-cols-12 gap-y-2">
-              {/* <div className="col-start-1 col-end-8 rounded-lg p-3">
-                <div className="flex flex-row items-center">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500">
-                    A
-                  </div>
-                  <div className="relative ml-3 rounded-xl bg-white px-4 py-2 text-sm shadow">
-                    <div>Hey How are you today?</div>
-                  </div>
-                </div>
-              </div> */}
-
-              <Message />
-            </div>
+            <ConversationContent
+              data={data}
+              isLoading={isLoading}
+              isError={isError}
+            />
           </div>
         </div>
         <div className="flex h-16 w-full flex-row items-center rounded-xl bg-white px-4">
@@ -44,6 +76,7 @@ export const Conversation = ({ chat }: { chat: Chat }) => {
               variant="primary"
               size="sm"
               disabled={message.length === 0}
+              isLoading={useCreateMessage.isLoading}
               onClick={() => {
                 useCreateMessage.mutate({ chatId: chat.id, text: message });
                 setMessage('');

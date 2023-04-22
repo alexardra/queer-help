@@ -7,6 +7,7 @@ import MessageService from '@/services/message';
 import ChatService from '@/services/chat';
 import ChatModel from '@/models/Chat';
 import { NotFoundError } from '@/errors';
+import MessageMapper from '@/mappers/message';
 
 const route = Router();
 
@@ -25,12 +26,8 @@ export default (app: Router) => {
     async (req: Request, res: Response) => {
       const personaId = (<ProtectedRequest>req).persona._id;
       const { chatId, text } = req.body;
-      const message = await messageService.createMessage(
-        chatId,
-        personaId,
-        text,
-      );
-      res.status(StatusCodes.CREATED).json(message);
+      await messageService.createMessage(chatId, personaId, text);
+      res.status(StatusCodes.CREATED);
     },
   );
 
@@ -49,7 +46,7 @@ export default (app: Router) => {
 
       const messages = await messageService.getMessages(chatId);
       res.status(StatusCodes.OK).json({
-        messages,
+        messages: messages.map((message) => MessageMapper.toDTO(message)),
         count: messages.length,
       });
     },

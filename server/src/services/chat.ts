@@ -14,7 +14,7 @@ export default class ChatService {
     message: string,
   ) {
     const session = await mongoose.connection.startSession();
-    console.log('create chat', assistanceId);
+
     let chat: IChat | undefined;
     await session.withTransaction(async () => {
       try {
