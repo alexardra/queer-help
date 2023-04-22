@@ -1,11 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 import { Header } from '@/components/Header';
 import { Button } from '@/components/Button';
 import { PersonaRoleTypes } from '@/features/auth/api';
 
 const HeaderNavigation = () => {
-  const navigate = useNavigate();
   const { persona, isLoading } = useAuth();
 
   if (isLoading) return <></>;
@@ -20,40 +19,26 @@ const HeaderNavigation = () => {
     }[persona.role];
 
     return (
-      <Button
-        variant="primary"
-        size="sm"
-        onClick={() => {
-          navigate(home.route);
-        }}
-      >
-        {home.title}
-      </Button>
+      <Link to={home.route}>
+        <Button variant="primary" size="sm">
+          {home.title}
+        </Button>
+      </Link>
     );
   }
 
   return (
     <>
-      {' '}
-      <Button
-        variant="plain"
-        size="sm"
-        onClick={() => {
-          navigate('/auth/user/login');
-        }}
-      >
-        Login in
-      </Button>
-      <Button
-        variant="primary"
-        size="sm"
-        className=" text-white"
-        onClick={() => {
-          navigate('/auth/user/register');
-        }}
-      >
-        Join
-      </Button>
+      <Link to="/auth/user/login">
+        <Button variant="plain" size="sm">
+          Login in
+        </Button>
+      </Link>
+      <Link to="auth/user/register">
+        <Button variant="primary" size="sm" className=" text-white">
+          Join
+        </Button>
+      </Link>
     </>
   );
 };

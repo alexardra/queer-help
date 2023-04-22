@@ -68,7 +68,7 @@ const schemas = {
     description: Joi.string().required(),
   }),
   chat: Joi.object().keys({
-    receiverId: Joi.string().required(),
+    assistanceId: Joi.string().required(),
     message: Joi.string().required(),
   }),
   message: Joi.object().keys({

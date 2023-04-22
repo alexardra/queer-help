@@ -37,10 +37,7 @@ export default (app: Router) => {
     async (req: Request, res: Response) => {
       const persona = (<ProtectedRequest>req).persona;
 
-      const assistance = await assistanceService.getAssistance(
-        req.params.id,
-        persona._id,
-      );
+      const assistance = await assistanceService.getAssistance(req.params.id);
 
       return res
         .status(StatusCodes.OK)

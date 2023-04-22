@@ -47,3 +47,10 @@ export const createAssistance = (assistance: {
 }) => {
   return axios.post('/assistances', assistance);
 };
+
+export const fetchAssistance = (id: string): Promise<Assistance> => {
+  return axios.get(`/assistances/${id}`).then((response: AxiosResponse) => {
+    const { assistance } = response.data as { assistance: Assistance };
+    return assistance;
+  });
+};

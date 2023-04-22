@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button';
 import { AsistanceCategoryMap, Assistance } from '../api';
+import { Link } from 'react-router-dom';
 
 type Props = {
   assistance: Assistance;
@@ -22,7 +23,10 @@ export const AssistanceCard: React.FC<Props> = (props: Props) => {
         </div>
       </div>
       <div className="flex w-1/5 items-start justify-end">
-        <Button>Get in touch</Button>
+        <Link to={`/user/chat/create/${props.assistance.id}`}>
+          <Button>Get in touch</Button>
+        </Link>
+        {/* </Link> */}
       </div>
     </div>
   );

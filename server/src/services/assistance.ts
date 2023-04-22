@@ -32,7 +32,7 @@ export default class AssistanceService {
     return assistances;
   }
 
-  public async getAssistance(assistanceId: string, authorId: string) {
+  public async getAssistance(assistanceId: string) {
     let assistance;
     try {
       assistance = await this.assistanceModel.findById(assistanceId);
@@ -44,14 +44,7 @@ export default class AssistanceService {
 
     if (!assistance) {
       throw new NotFoundError(
-        `No assistance found with given id ${assistanceId} for the user ${authorId}`,
-      );
-    }
-
-    const canAccess = assistance.authorId.toString() === authorId;
-    if (!canAccess) {
-      throw new ForbiddenError(
-        `User ${authorId} does not have permission for this action`,
+        `No assistance found with given id ${assistanceId} for the user`,
       );
     }
     return assistance;
@@ -62,7 +55,13 @@ export default class AssistanceService {
     authorId: string,
     updatedAssistance: IAssistanceDto,
   ) {
-    const assistance = await this.getAssistance(assitanceId, authorId);
+    const assistance = await this.getAssistance(assitanceId);
+    if (assistance.authorId.toString() !== authorId) {
+      throw new ForbiddenError(
+        `User ${authorId} does not have permission for this action`,
+      );
+    }
+
     assistance.category = updatedAssistance.category;
     assistance.status = updatedAssistance.status;
     assistance.title = updatedAssistance.title;

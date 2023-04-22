@@ -32,10 +32,8 @@ export const AssistanceForm: React.FC<Props> = ({ onSuccess }: Props) => {
         className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log('submit', assistance);
           if (assistance.category === undefined) return;
 
-          console.log('-here-');
           useCreateAssistance.mutate({
             ...assistance,
             category: assistance.category,
