@@ -1,15 +1,21 @@
 import { useRoutes } from 'react-router-dom';
 
-import { Landing, NotFound } from '@/features/misc';
+import { Landing } from '@/features/misc';
 import { userRoutes } from './user';
 import { adminRoutes } from './admin';
 import { publicRoutes } from './public';
 
-import useAuth from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { PersonaRoleTypes } from '@/features/auth/api';
+import { useQuery } from '@tanstack/react-query';
 
 export const AppRoutes = () => {
-  const { persona } = useAuth();
+  const { persona, loadPersona } = useAuth();
+
+  useQuery({
+    queryKey: ['auth', 'me'],
+    queryFn: loadPersona,
+  });
 
   const commonRoutes = [{ path: '/', element: <Landing /> }];
   let allRoutes = [...publicRoutes, ...commonRoutes];

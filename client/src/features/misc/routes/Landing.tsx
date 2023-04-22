@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
-import useAuth from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { Header } from '@/components/Header';
 import { Button } from '@/components/Button';
 import { PersonaRoleTypes } from '@/features/auth/api';
 
 const HeaderNavigation = () => {
-  const { persona, isLoading } = useAuth();
-
-  if (isLoading) return <></>;
+  const { persona } = useAuth();
 
   if (persona !== null) {
     const home = {

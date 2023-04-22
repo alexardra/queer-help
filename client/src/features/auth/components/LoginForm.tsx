@@ -1,9 +1,10 @@
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 
 import { PersonaLoginRequest, PersonaAuthResponse } from '@/features/auth/api';
+import { useAuth } from '@/hooks/useAuth';
+import { useMutation } from '@tanstack/react-query';
 
 type LoginFormProps = {
   loginPersona: (
@@ -33,7 +34,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
       onSubmit={(e) => {
         e.preventDefault();
-
         useLogin.mutate({ email, password });
       }}
     >
@@ -53,7 +53,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         value={password}
         onChange={setPassword}
       />
-      {useLogin.isError && (
+      {errorMessage && (
         <p className="relative rounded border border-red-400 bg-red-100 px-3 py-1 text-xs text-red-700">
           {errorMessage}
         </p>

@@ -10,6 +10,7 @@ import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
 import { SelectUserRoleInput } from './SelectUserRoleInput';
 import { TextArea } from '@/components/TextArea';
+import { useAuth } from '@/hooks/useAuth';
 
 type RegisterFormProps = {
   registerPersona: (data: UserRegisterRequest) => Promise<PersonaAuthResponse>;
@@ -19,6 +20,7 @@ type RegisterFormProps = {
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSuccess,
 }: RegisterFormProps) => {
+  const { userRegister } = useAuth();
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -32,12 +34,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   });
 
   const useRegister = useMutation({
-    mutationFn: registerUser,
+    mutationFn: userRegister,
     onSuccess: (data) => onSuccess(data),
   });
 
-  const errorMessage = 'Invalid credentials, please try again';
-
+  const errorMessage = useRegister.isError
+    ? (useRegister.error as Error).message
+    : '';
   const isVolunteerUser =
     user.role === UserRole.Volunteer || user.role === UserRole.Both;
 

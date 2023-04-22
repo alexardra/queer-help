@@ -5,10 +5,17 @@ import { Button } from '@/components/Button';
 import { Spinner } from '@/components/Spinner';
 import { Conversation } from '../components/Conversation';
 import { ConversationSummary } from '../components/ConversationSummary';
+import { useAuth } from '@/hooks/useAuth';
+import useSocket from '@/hooks/useSocket';
 
 export const Chats = () => {
   const navigate = useNavigate();
   const { chatId } = useParams();
+
+  const { persona } = useAuth();
+  const socket = useSocket(persona, {
+    emits: [{ name: 'add-user', data: persona?.id }],
+  });
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['chats'],

@@ -1,14 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  PersonaAuthResponse,
-  PersonaRole,
-  PersonaRoleTypes,
-  loginAdmin,
-  loginUser,
-} from '../api';
+import { PersonaAuthResponse, PersonaRole, PersonaRoleTypes } from '../api';
 import { LoginForm } from '../components/LoginForm';
+import { useAuth } from '@/hooks/useAuth';
 
 type LoginProps = {
   personaRole: PersonaRole;
@@ -16,16 +10,18 @@ type LoginProps = {
 
 export const Login: React.FC<LoginProps> = ({ personaRole }: LoginProps) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const { userLogin, adminLogin } = useAuth();
+
+  if (!userLogin || !adminLogin) return <></>;
 
   const loginAction = {
-    [PersonaRoleTypes.ADMIN]: loginAdmin,
-    [PersonaRoleTypes.USER]: loginUser,
+    [PersonaRoleTypes.ADMIN]: adminLogin,
+    [PersonaRoleTypes.USER]: userLogin,
   }[personaRole];
 
   const nextRoute = {
-    [PersonaRoleTypes.ADMIN]: '/dashboard',
-    [PersonaRoleTypes.USER]: '/portal',
+    [PersonaRoleTypes.ADMIN]: '/admin/dashboard',
+    [PersonaRoleTypes.USER]: '/user/portal',
   }[personaRole];
 
   return (
@@ -34,7 +30,6 @@ export const Login: React.FC<LoginProps> = ({ personaRole }: LoginProps) => {
         loginPersona={loginAction}
         onSuccess={(authResponse: PersonaAuthResponse) => {
           window.localStorage.setItem('token', authResponse.token);
-          void queryClient.invalidateQueries({ queryKey: ['auth'] });
 
           navigate(nextRoute);
         }}

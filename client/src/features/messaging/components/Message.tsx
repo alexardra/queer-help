@@ -1,9 +1,9 @@
-import useAuth from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { MessageType } from '../api';
 
 export const Message = ({ message }: { message: MessageType }) => {
   const { persona } = useAuth();
-  if (!persona) {
+  if (persona === null) {
     return <></>;
   }
 
