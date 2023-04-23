@@ -14,7 +14,7 @@ export default (app: express.Application) => {
   /** Cors */
   app.use(
     cors({
-      origin: 'http://localhost:8080',
+      origin: config.staticOrigin,
     }),
   );
   /** Logging */

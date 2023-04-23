@@ -22,4 +22,5 @@ export default {
   api: {
     prefix: '/api',
   },
+  staticOrigin: process.env.CORS_ORIGIN,
 };
