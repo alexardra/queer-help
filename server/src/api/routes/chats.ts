@@ -56,7 +56,7 @@ export default (app: Router) => {
       res.status(StatusCodes.OK).json({
         chats: chats.map((chat) => ({
           ...ChatMapper.toDTO(chat),
-          assistance: AssistanceMapper.toDTO(chat.assistance),
+          assistance: AssistanceMapper.toDTO(chat.assistance, personaId),
         })),
         count: chats.length,
       });

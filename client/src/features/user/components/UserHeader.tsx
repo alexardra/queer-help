@@ -11,7 +11,9 @@ export const UserHeader: React.FC = () => {
     <Header>
       <div className="flex items-center gap-x-2">
         <Link to="/user/chat">
-          <Button variant="primary">Chat</Button>
+          <Button variant="primary" size="sm">
+            Chat
+          </Button>
         </Link>
         <Button
           variant="inverse"

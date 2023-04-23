@@ -13,6 +13,7 @@ export type PersonaCredentials = {
   firstname: string;
   lastname: string;
   role: PersonaRole;
+  userRole?: UserRole.Beneficiary | UserRole.Volunteer | UserRole.Both;
 };
 
 export type PersonaLoginRequest = {

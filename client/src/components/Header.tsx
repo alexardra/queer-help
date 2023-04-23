@@ -17,7 +17,7 @@ export const Header = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <header className="bg-purple-600 px-4 py-2.5 lg:px-6">
-      <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
+      <div className="mx-auto flex max-w-screen-lg flex-wrap items-center justify-between">
         <Link to={route}>
           <div className="align-center flex">
             <img src="/logo.svg" alt="logo" className="mt-1 w-8" />

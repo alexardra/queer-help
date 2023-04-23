@@ -7,6 +7,7 @@ export type Assistance = {
   status: string;
   title: string;
   description: string;
+  createdByPersona: boolean;
 };
 
 export enum AssistanceCategory {

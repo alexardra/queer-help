@@ -7,7 +7,7 @@ import { AssistanceCategorySelectInput } from './AssistanceCategorySelectInput';
 import { Button } from '@/components/Button';
 
 type Props = {
-  onSuccess: () => void;
+  onSuccess: () => unknown;
 };
 
 export const AssistanceForm: React.FC<Props> = ({ onSuccess }: Props) => {
@@ -27,57 +27,55 @@ export const AssistanceForm: React.FC<Props> = ({ onSuccess }: Props) => {
   });
 
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <form
-        className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (assistance.category === undefined) return;
+    <form
+      className="mx-5 flex w-full max-w-lg flex-col gap-y-4 rounded bg-white p-8 shadow md:w-1/2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (assistance.category === undefined) return;
 
-          useCreateAssistance.mutate({
-            ...assistance,
-            category: assistance.category,
-          });
+        useCreateAssistance.mutate({
+          ...assistance,
+          category: assistance.category,
+        });
+      }}
+    >
+      <AssistanceCategorySelectInput
+        required
+        disabled={useCreateAssistance.isLoading}
+        value={assistance.category}
+        onChange={(value: AssistanceCategory) => {
+          setAssistance((prevState) => ({ ...prevState, category: value }));
         }}
+      />
+      <Input
+        label="Title"
+        type={'text'}
+        required
+        disabled={useCreateAssistance.isLoading}
+        value={assistance.title}
+        onChange={(value: string) => {
+          setAssistance((prevState) => ({ ...prevState, title: value }));
+        }}
+      />
+      <TextArea
+        label="Description"
+        required
+        disabled={useCreateAssistance.isLoading}
+        value={assistance.description}
+        onChange={(value: string) => {
+          setAssistance((prevState) => ({
+            ...prevState,
+            description: value,
+          }));
+        }}
+      />
+      <Button
+        type="submit"
+        disabled={useCreateAssistance.isLoading}
+        isLoading={useCreateAssistance.isLoading}
       >
-        <AssistanceCategorySelectInput
-          required
-          disabled={useCreateAssistance.isLoading}
-          value={assistance.category}
-          onChange={(value: AssistanceCategory) => {
-            setAssistance((prevState) => ({ ...prevState, category: value }));
-          }}
-        />
-        <Input
-          label="Title"
-          type={'text'}
-          required
-          disabled={useCreateAssistance.isLoading}
-          value={assistance.title}
-          onChange={(value: string) => {
-            setAssistance((prevState) => ({ ...prevState, title: value }));
-          }}
-        />
-        <TextArea
-          label="Description"
-          required
-          disabled={useCreateAssistance.isLoading}
-          value={assistance.description}
-          onChange={(value: string) => {
-            setAssistance((prevState) => ({
-              ...prevState,
-              description: value,
-            }));
-          }}
-        />
-        <Button
-          type="submit"
-          disabled={useCreateAssistance.isLoading}
-          isLoading={useCreateAssistance.isLoading}
-        >
-          Create
-        </Button>
-      </form>
-    </div>
+        Create
+      </Button>
+    </form>
   );
 };

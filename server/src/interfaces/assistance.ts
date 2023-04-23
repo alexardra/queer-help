@@ -41,4 +41,5 @@ export interface IAssistanceDto {
   status: AssistanceStatusType;
   title: string;
   description: string;
+  createdByPersona: boolean;
 }

@@ -10,6 +10,7 @@ export default class UserMapper {
     userDto.lastname = user.lastname;
     userDto.verificationStatus = user.verificationStatus;
     userDto.role = PersonaRoleTypes.USER;
+    userDto.userRole = user.role;
 
     return userDto;
   }

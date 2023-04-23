@@ -25,6 +25,7 @@ interface IPersonaDto {
   firstname: string;
   lastname: string;
   role: PersonaRoleTypes.ADMIN | PersonaRoleTypes.USER;
+  userRole: UserRole.Beneficiary | UserRole.Volunteer | UserRole.Both;
 }
 
 interface IPersonaDocument extends IPersona {
