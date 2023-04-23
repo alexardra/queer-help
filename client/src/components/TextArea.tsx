@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { Hint } from './Hint';
 
 export type TextAreaProps = {
   id?: string;
@@ -10,6 +11,7 @@ export type TextAreaProps = {
   required?: boolean;
   disabled?: boolean;
   placeholder?: string;
+  hint?: string;
 
   value?: string;
   onChange: (value: string) => void;
@@ -27,6 +29,7 @@ export const TextArea: React.FC<TextAreaProps> = (props: TextAreaProps) => {
           className="block text-sm font-bold text-gray-700"
         >
           {props.label}
+          {props.hint && <Hint id={props.hint} text={props.hint} />}
         </label>
       )}
       <textarea

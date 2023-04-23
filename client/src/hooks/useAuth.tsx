@@ -21,6 +21,7 @@ type AuthContextType = {
   userRegister?: (
     credentials: UserRegisterRequest,
   ) => Promise<PersonaAuthResponse>;
+  logout?: () => void;
   isLoading?: boolean;
   error?: Error;
   persona: PersonaCredentials | null;
@@ -99,12 +100,18 @@ function useProvideAuth() {
       });
   };
 
+  const logout = () => {
+    window.localStorage.removeItem('token');
+    setPersona(null);
+  };
+
   return {
     persona,
     loadPersona,
     userLogin,
     adminLogin,
     userRegister,
+    logout,
     error,
     isLoading,
   } as AuthContextType;

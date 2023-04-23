@@ -53,7 +53,7 @@ export const Chats = () => {
       <div className="p-4">
         <div className="mx-auto grid h-[calc(100vh-100px)] max-w-screen-xl grid-cols-5 gap-4">
           <div className="con-span-2 rounded border">
-            <h1 className="my-2 text-center text-gray-700">Conversations</h1>
+            <h1 className="my-2 text-center text-gray-500">Chats</h1>
             <div className="flex flex-col gap-y-1">
               {chats.map((chat) => (
                 <Button
@@ -61,7 +61,7 @@ export const Chats = () => {
                   variant="plain"
                   className="!p-0"
                   onClick={() => {
-                    navigate(chat.id);
+                    navigate(`/user/chat/${chat.id}`);
                   }}
                 >
                   <ConversationSummary chat={chat} />

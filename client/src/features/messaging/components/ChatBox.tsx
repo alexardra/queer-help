@@ -5,8 +5,8 @@ export const ChatBox = ({ chat }: { chat: Chat | null }) => {
   return (
     <div className="col-span-4 rounded border">
       {!chat ? (
-        <div className="mt-10 flex items-center justify-center">
-          Select one of the conversations to start messaging
+        <div className="mt-10 flex items-center justify-center text-gray-500">
+          Tap on a chat to start a conversation...
         </div>
       ) : (
         <Conversation chat={chat} />

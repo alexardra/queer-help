@@ -1,11 +1,13 @@
 import { ChangeEvent } from 'react';
 import { UserRole } from '../api';
+import { Hint } from '@/components/Hint';
 
 type Props = {
   onChange: (value: UserRole) => void;
-  value: number;
+  value?: number;
   required?: boolean;
   disabled?: boolean;
+  hint?: string;
 };
 
 type UserRoleOptionType = 'Beneficiary' | 'Volunteer' | 'Both';
@@ -17,18 +19,20 @@ const UserRoleOptions = {
 };
 
 export const SelectUserRoleInput: React.FC<Props> = (props: Props) => {
-  const selected = {
-    [UserRole.Beneficiary]: 'Beneficiary',
-    [UserRole.Volunteer]: 'Volunteer',
-    [UserRole.Both]: 'Both',
-  }[props.value];
+  const selected = props.value
+    ? {
+        [UserRole.Beneficiary]: 'Beneficiary',
+        [UserRole.Volunteer]: 'Volunteer',
+        [UserRole.Both]: 'Both',
+      }[props.value]
+    : undefined;
 
   return (
     <div className="flex flex-col items-start gap-y-1">
       <label htmlFor="role" className="block text-sm font-bold text-gray-700">
-        Desired user role
+        Desired role
+        {props.hint && <Hint id={props.hint} text={props.hint} />}
       </label>
-      {/* todo: add hint here */}
       <select
         id="role"
         name="role"

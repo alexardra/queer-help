@@ -39,7 +39,7 @@ export default (app: express.Application) => {
         });
       } else {
         const user = activeChat.users.find(
-          (user) => user.personaId !== chat.personaId,
+          (user) => user.personaId === chat.personaId,
         );
         if (!user) {
           activeChat.users.push({
@@ -59,7 +59,7 @@ export default (app: express.Application) => {
       if (!activeChat) return;
 
       const listener = activeChat.users.find(
-        (user) => user.personaId === message.senderId,
+        (user) => user.personaId !== message.senderId,
       );
 
       if (!listener) return;

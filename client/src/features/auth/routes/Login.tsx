@@ -25,7 +25,10 @@ export const Login: React.FC<LoginProps> = ({ personaRole }: LoginProps) => {
   }[personaRole];
 
   return (
-    <div className="flex h-[calc(100vh-60px)] w-full items-center justify-center">
+    <div className="flex h-[calc(100vh-60px)] w-full flex-col items-center justify-center gap-y-3">
+      <h3 className="flex text-center text-xl font-semibold tracking-wider text-purple-700">
+        Login
+      </h3>
       <LoginForm
         loginPersona={loginAction}
         onSuccess={(authResponse: PersonaAuthResponse) => {

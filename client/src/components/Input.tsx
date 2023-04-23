@@ -1,4 +1,5 @@
 import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import { Hint } from './Hint';
 
 export type InputProps = {
   id?: string;
@@ -11,6 +12,7 @@ export type InputProps = {
   placeholder?: string;
 
   error?: string;
+  hint?: string;
 
   value?: number | string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +28,7 @@ export const Input: React.FC<InputProps> = (props: InputProps) => {
           className="block text-sm font-bold text-gray-700"
         >
           {props.label}
+          {props.hint && <Hint id={props.hint} text={props.hint} />}
         </label>
       )}
       <input
