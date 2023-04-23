@@ -3,19 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchChats } from '../api';
 import { Button } from '@/components/Button';
 import { Spinner } from '@/components/Spinner';
-import { Conversation } from '../components/Conversation';
 import { ConversationSummary } from '../components/ConversationSummary';
 import { useAuth } from '@/hooks/useAuth';
-import useSocket from '@/hooks/useSocket';
+import { SocketProvider } from '@/hooks/useMessagingSocket';
+import { ChatBox } from '../components/ChatBox';
 
 export const Chats = () => {
   const navigate = useNavigate();
   const { chatId } = useParams();
 
   const { persona } = useAuth();
-  const socket = useSocket(persona, {
-    emits: [{ name: 'add-user', data: persona?.id }],
-  });
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['chats'],
@@ -45,41 +42,36 @@ export const Chats = () => {
     );
   }
   const { chats } = data;
-  let openChat;
+  let openChat = null;
   if (chatId) {
-    openChat = chats.find((chat) => chat.id === chatId);
+    const chat = chats.find((chat) => chat.id === chatId);
+    openChat = chat ?? null;
   }
 
   return (
-    <div className="p-4">
-      <div className="mx-auto grid h-[calc(100vh-100px)] max-w-screen-xl grid-cols-5 gap-4">
-        <div className="con-span-2 rounded border">
-          <h1 className="my-2 text-center text-gray-700">Conversations</h1>
-          <div className="flex flex-col gap-y-1">
-            {chats.map((chat) => (
-              <Button
-                key={chat.id}
-                variant="plain"
-                className="!p-0"
-                onClick={() => {
-                  navigate(chat.id);
-                }}
-              >
-                <ConversationSummary chat={chat} />
-              </Button>
-            ))}
-          </div>
-        </div>
-        <div className="col-span-4 rounded border">
-          {!openChat ? (
-            <div className="mt-10 flex items-center justify-center">
-              Select one of the conversations to start messaging
+    <SocketProvider persona={persona} chat={openChat}>
+      <div className="p-4">
+        <div className="mx-auto grid h-[calc(100vh-100px)] max-w-screen-xl grid-cols-5 gap-4">
+          <div className="con-span-2 rounded border">
+            <h1 className="my-2 text-center text-gray-700">Conversations</h1>
+            <div className="flex flex-col gap-y-1">
+              {chats.map((chat) => (
+                <Button
+                  key={chat.id}
+                  variant="plain"
+                  className="!p-0"
+                  onClick={() => {
+                    navigate(chat.id);
+                  }}
+                >
+                  <ConversationSummary chat={chat} />
+                </Button>
+              ))}
             </div>
-          ) : (
-            <Conversation chat={openChat} />
-          )}
+          </div>
+          <ChatBox chat={openChat} />
         </div>
       </div>
-    </div>
+    </SocketProvider>
   );
 };

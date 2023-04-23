@@ -43,7 +43,11 @@ export const fetchChats = (): Promise<FetchChatsResponse> => {
 };
 
 export const createMessage = (data: { chatId: string; text: string }) => {
-  return axios.post('/messages', data);
+  return axios
+    .post('/messages', data)
+    .then(
+      (response: AxiosResponse) => response.data as { message: MessageType },
+    );
 };
 
 export const getMessages = (chatId: string): Promise<FetchMessagesResponse> => {

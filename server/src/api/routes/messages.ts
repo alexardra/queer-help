@@ -26,8 +26,14 @@ export default (app: Router) => {
     async (req: Request, res: Response) => {
       const personaId = (<ProtectedRequest>req).persona._id;
       const { chatId, text } = req.body;
-      await messageService.createMessage(chatId, personaId, text);
-      res.status(StatusCodes.CREATED);
+      const message = await messageService.createMessage(
+        chatId,
+        personaId,
+        text,
+      );
+      res
+        .status(StatusCodes.CREATED)
+        .json({ message: MessageMapper.toDTO(message) });
     },
   );
 
