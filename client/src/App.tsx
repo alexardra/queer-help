@@ -6,14 +6,7 @@ import { AuthProvider } from './hooks/useAuth';
 
 import './App.css';
 
-const queryClilent = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    },
-  },
-});
+const queryClilent = new QueryClient({});
 
 function App() {
   return (

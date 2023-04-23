@@ -53,7 +53,7 @@ export default (app: express.Application) => {
     });
 
     socket.on('message', (message: IMessageDto) => {
-      console.log(`SocketIO: Received message`, message);
+      console.log(`SocketIO: Received message`, message.id);
       const activeChat = activeChats.find((c) => c.chatId === message.chatId);
 
       if (!activeChat) return;

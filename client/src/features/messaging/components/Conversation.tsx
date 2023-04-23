@@ -72,7 +72,6 @@ export const Conversation = ({ chat }: { chat: Chat }) => {
   const scroll = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setTimeout(() => {
-      console.log(scroll.current);
       if (scroll.current)
         scroll.current.scrollTop = scroll.current?.scrollHeight;
     }, 100);

@@ -15,6 +15,7 @@ export const AppRoutes = () => {
   useQuery({
     queryKey: ['auth', 'me'],
     queryFn: loadPersona,
+    retry: false,
   });
 
   const commonRoutes = [{ path: '/', element: <Landing /> }];

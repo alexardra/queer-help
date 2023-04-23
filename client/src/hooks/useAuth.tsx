@@ -53,9 +53,9 @@ function useProvideAuth() {
         setIsLoading(false);
         return Promise.resolve(persona);
       })
-      .catch((error) => {
-        setError(error as Error);
-        return Promise.reject(error);
+      .catch(() => {
+        setPersona(null);
+        return Promise.resolve(null);
       });
   };
 

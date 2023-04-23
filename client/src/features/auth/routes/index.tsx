@@ -8,7 +8,7 @@ import { Header } from '@/components/Header';
 
 export const AuthRoutes: React.FC = () => {
   return (
-    <div className="flex flex-col items-stretch bg-purple-100">
+    <div className="flex flex-col items-stretch bg-purple-50">
       <Header />
       <Routes>
         <Route path="" element={<Navigate to="user/login" replace />} />

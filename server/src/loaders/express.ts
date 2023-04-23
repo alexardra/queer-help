@@ -56,7 +56,7 @@ export default (app: express.Application) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       next: NextFunction,
     ) => {
-      console.log(`Error occured: ${err.stack}`);
+      console.log(`Error occured: ${err.message}`);
 
       res.status(err.status || 500).json({
         error: {
