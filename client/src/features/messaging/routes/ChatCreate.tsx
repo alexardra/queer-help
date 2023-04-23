@@ -59,36 +59,37 @@ export const ChatCreate = () => {
   }
 
   return (
-    <div className="mt-10 flex w-full justify-center">
-      <div className="w-full px-5">
-        <div className="hover:bg-gray-10 flex cursor-pointer flex-col gap-y-3 rounded-lg border border-gray-200 bg-white p-5 shadow">
-          <AssistanceDetails assistance={assistance} />
-          <div className="flex flex-col gap-y-2 border-t-2">
-            <div className="text-sm">
-              Please write several sentences to introduce yourself and provide
-              relevant experience details that might help with this particular
-              assistance:
-            </div>
-            <TextArea
-              label=""
-              value={message}
-              required
-              onChange={setMessage}
-              disabled={useCreateChat.isLoading}
-            />
-            <Button
-              disabled={useCreateChat.isLoading}
-              isLoading={useCreateChat.isLoading}
-              onClick={() => {
-                useCreateChat.mutate({
-                  assistanceId: assistance.id,
-                  message,
-                });
-              }}
-            >
-              Submit
-            </Button>
+    <div className="flex h-[calc(100vh-60px)] w-full flex-col items-center justify-center gap-y-3">
+      <h3 className="flex text-center text-xl font-semibold tracking-wider text-purple-700">
+        Reach out to help
+      </h3>
+      <div className="mx-5 flex w-full max-w-lg flex-col gap-y-4 divide-y-2 rounded bg-white p-8 shadow md:w-1/2">
+        <AssistanceDetails assistance={assistance} />
+        <div className="flex flex-col gap-y-2 pt-3">
+          <div className="text-center text-xs">
+            Please write several sentences to introduce yourself and provide
+            relevant experience details that might help with this particular
+            assistance:
           </div>
+          <TextArea
+            label=""
+            value={message}
+            required
+            onChange={setMessage}
+            disabled={useCreateChat.isLoading}
+          />
+          <Button
+            disabled={useCreateChat.isLoading}
+            isLoading={useCreateChat.isLoading}
+            onClick={() => {
+              useCreateChat.mutate({
+                assistanceId: assistance.id,
+                message,
+              });
+            }}
+          >
+            Submit
+          </Button>
         </div>
       </div>
     </div>
