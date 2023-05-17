@@ -20,9 +20,8 @@ export const Header = ({ children }: { children?: React.ReactNode }) => {
       <div className="mx-auto flex max-w-screen-lg flex-wrap items-center justify-between">
         <Link to={route}>
           <div className="align-center flex">
-            <img src="/logo.svg" alt="logo" className="mt-1 w-8" />
             <Button variant="plain" className="!px-0 text-white">
-              Queer Help
+              Volunteer App
             </Button>
           </div>
         </Link>
